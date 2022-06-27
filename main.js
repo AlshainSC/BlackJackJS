@@ -46,6 +46,7 @@ let dealt = false;
 //setup function
     function setup() {
         createDeck();
+        game();
     }
 
 //menu function
@@ -53,9 +54,6 @@ let dealt = false;
     //button functions
     $('#newGame').on('click', function() {
         //change menu item based on choice
-        let newGame = $("<div>");
-        newGame.addClass("gameBoard");
-        $(".menu").after(newGame)
 
         $("#hit").removeClass("disabled").addClass("button");
         $("#stay").removeClass("disabled").addClass("button");
@@ -85,14 +83,27 @@ let dealt = false;
     function game() { 
         if (target === true) { //true is player, false is dealer
             //player turn
-            if (playerStand === false) {
+            $("#deal").on('click', function() {
+                deal();
+                let pH = $('<p>')
+                let dH = $('<p>')
+                for (let i = 0; i < playerHand.length; i++) {
+
+                    pH.html(playerHand[i].suit + " " + playerHand[i].value);
+                    
+                    dH.html(dealerHand[i].suit + " " + dealerHand[i].value);
+                    
+                    $("#playerCards").append(pH);
+                    $("#dealerCards").append(dH);
+                }
+                if (playerHand.length === 2) {
+                    $("#deal").removeClass("button").addClass("disabled");
+                };
+            });
+
+            $("#hit").on('click', function() {
                 hit();
-                $("#playerHand").append(playerHand.suit + " " + playerHand.value);
-                target = false;
-            } else { //dealer turn
-                dealer();
-                target = true;
-            }
+            });
             //round over
         }
         if (playerStand === true && dealerStand === true) {
@@ -220,9 +231,6 @@ let dealt = false;
         };
         shuffled = true;
         console.log("Deck shuffled");
-        if (shuffled === true) {
-            deal();
-        }
     };
 
     //deal cards
@@ -238,26 +246,23 @@ let dealt = false;
             dealerHand.push(card);
             totalCards++;
         };
-        let pH = $('<p>')
+        /*let pH = $('<p>')
         let dH = $('<p>')
         console.log(playerHand, dealerHand)
-        console.log(deck)
+
         pH.html(playerHand[0].suit + " " + playerHand[0].value);
         //pH.html(playerHand[1].suit + " " + playerHand[1].value);
         dH.html(dealerHand[0].suit + " " + dealerHand[0].value);
         //dH.html(dealerHand[1].suit + " " + dealerHand[1].value);
         $("#playerCards").append(pH);
-        $("#dealerCards").append(dH);
-        dealt = true;
-        if (dealt === true) {
-            game();
-        }
+        $("#dealerCards").append(dH); */
     };
 
     //hit
     function hit() {
         let card = deck.pop();
         playerHand.push(card);
+        $("#playerCards").append(card)
     }
 
     //stand
