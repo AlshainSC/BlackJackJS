@@ -1,0 +1,47 @@
+/* Headers */
+.header {
+    font-family: 'Times New Roman', Times, serif;
+    color: #272A31;
+}
+/* Body */
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #A76B09;
+    color: #272A31;
+}
+
+.hand {
+    display: block;
+    color: #272A31;
+    width: 600px;
+}
+
+
+
+/* Buttons */
+
+.button {
+    background-color: #181B22;
+    color: #DDA74F;
+}
+
+.disabled {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+
+/* Color Palette
+
+#181619 <-- black
+#181B22 <-- slightly less black
+#272A31 <-- might be grey
+#A76B09 <-- dark gold
+#DDA74F <-- light gold
+
+Color Palette generated and customized using Adobe Color:
+https://color.adobe.com/create/color-wheel
+*/
+
+
