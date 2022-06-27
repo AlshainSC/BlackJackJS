@@ -88,8 +88,10 @@ let dealt = false;
                 let pH = $('<p>')
                 let dH = $('<p>')
                 for (let i = 0; i < playerHand.length; i++) {
-
-                    pH.html(playerHand[i].suit + " " + playerHand[i].value);
+//update html to reflect dealt cards
+//this logic was pushed from the deal() function 
+//keep this in mind for hit() and stay() etc...
+                    pH.html(playerHand[i].suit + " " + playerHand[i].value); 
                     
                     dH.html(dealerHand[i].suit + " " + dealerHand[i].value);
                     
@@ -97,23 +99,28 @@ let dealt = false;
                     $("#dealerCards").append(dH);
                 }
                 if (playerHand.length === 2) {
-                    $("#deal").removeClass("button").addClass("disabled");
+//remove deal button when each player has two cards in hand
+                    $("#deal").removeClass("button").addClass("disabled"); 
                 };
             });
 
             $("#hit").on('click', function() {
                 hit();
+                //here implement html update on hit with new card(s)
             });
-            //round over
         }
+//conditions checking round over
         if (playerStand === true && dealerStand === true) {
             for (let i = 0; i < playerHand.length; i++) {
                 pHandVal += playerHand[i].value;
+                //value of cards in hand
             }
             for (let i = 0; i < dealerHand.length; i++) {
                 dHandVal += dealerHand[i].value;
+                //value of cards in hand
             }
-
+//win conditions
+//roundOver() needs testing
             if (pHandVal > 21) {
                 playerBust = true;
                 dealerScore++;
@@ -150,7 +157,9 @@ let dealt = false;
     }
 
 //round over, to next round
-    function roundOver() { // reset
+    function roundOver() {
+//reset variables
+//potentially better as a separate function
         playerHand = [];
         dealerHand = [];
         playerStand = false;
@@ -195,7 +204,9 @@ let dealt = false;
             }
         };
 
-        for (let card in deck) { //check face cards and assign appropriate point value
+        for (let card in deck) { 
+//check face cards and assign appropriate point value
+//assign face cards with appropriate names: Jack, Queen, King, Ace(?)
             if (deck[card].value === 11) {
                 deck[card].value = 10;
             }
@@ -246,16 +257,6 @@ let dealt = false;
             dealerHand.push(card);
             totalCards++;
         };
-        /*let pH = $('<p>')
-        let dH = $('<p>')
-        console.log(playerHand, dealerHand)
-
-        pH.html(playerHand[0].suit + " " + playerHand[0].value);
-        //pH.html(playerHand[1].suit + " " + playerHand[1].value);
-        dH.html(dealerHand[0].suit + " " + dealerHand[0].value);
-        //dH.html(dealerHand[1].suit + " " + dealerHand[1].value);
-        $("#playerCards").append(pH);
-        $("#dealerCards").append(dH); */
     };
 
     //hit
