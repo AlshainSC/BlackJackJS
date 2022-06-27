@@ -227,17 +227,31 @@ let dealt = false;
 
     //deal cards
     function deal() {
-        if (playerHand.length < 2) {
+        let totalCards = 0;
+        if (playerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
             playerHand.push(card);
+            totalCards++;
         }
-        if (dealerHand.length < 2) {
+        if (dealerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
             dealerHand.push(card);
+            totalCards++;
         };
-        $(".gameBoard").append("<div class='playerHand' id='playerHand'>Player Hand: <br><br></div>" + playerHand.suit + playerHand.value + "<br>");
-        $(".gameBoard").append("<div class='dealerHand' id='dealerHand'>Dealer Hand: <br><br></div>" + dealerHand.suit + dealerHand.value + "<br>");
-        console.log(playerHand, dealerHand);
+        let pH = $('<p>')
+        let dH = $('<p>')
+        console.log(playerHand, dealerHand)
+        console.log(deck)
+        pH.html(playerHand[0].suit + " " + playerHand[0].value);
+        //pH.html(playerHand[1].suit + " " + playerHand[1].value);
+        dH.html(dealerHand[0].suit + " " + dealerHand[0].value);
+        //dH.html(dealerHand[1].suit + " " + dealerHand[1].value);
+        $("#playerCards").append(pH);
+        $("#dealerCards").append(dH);
+        dealt = true;
+        if (dealt === true) {
+            game();
+        }
     };
 
     //hit
