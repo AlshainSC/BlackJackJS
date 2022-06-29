@@ -32,7 +32,7 @@ let dealt = false;
 //CSS
 
     //setup event listeners to style buttons
-    $('.button').on('mouseover', function() {
+    /* $('.button').on('mouseover', function() {
         //change color
         $(this).css('background-color', '#DDA74F');
         $(this).css('color', '#272A31');
@@ -42,7 +42,7 @@ let dealt = false;
         //change color
         $(this).css('background-color', '#181B22');
         $(this).css('color', '#DDA74F');
-    });
+    }); */
 
 
 //setup function
@@ -264,18 +264,17 @@ let dealt = false;
         for (let card in deck) { 
 //check face cards and assign appropriate point value
 //assign face cards with appropriate names: Jack, Queen, King, Ace(?)
-            if (deck[card].value === 11) {
+            
+            if (deck[card].value === 11) { //jack
                 deck[card].value = 10;
             }
-            if (deck[card].value === 12) {
+            if (deck[card].value === 12) { //queen
                 deck[card].value = 10;
             }
-            if (deck[card].value === 13) {
+            if (deck[card].value === 13) { //king
                 deck[card].value = 10;
             }
-            if (deck[card].value === 14) {
-                deck[card].value = 10;
-            }
+
         };
 
         if (deck.length === 52) {
@@ -304,6 +303,7 @@ let dealt = false;
 
     //deal cards
     function deal() {
+        
         let totalCards = 0;
         if (playerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
@@ -315,6 +315,26 @@ let dealt = false;
             dealerHand.push(card);
             totalCards++;
         };
+
+        for (let i = 0; i < playerHand.length; i++) {
+            if (playerHand[i].value === 1) {
+                if (playerHand[i].value + 11 > 21) {
+                    playerHand[i].value = 1;
+                } else {
+                    playerHand[i].value = 11;
+                }
+            }
+        }
+        for (let i = 0; i < dealerHand.length; i++) {
+            if (dealerHand[i].value === 1) {
+                if (dealerHand[i].value + 11 > 21) {
+                    dealerHand[i].value = 1;
+                } else {
+                    dealerHand[i].value = 11;
+                }
+            }
+        }
+
 
     };
 
@@ -343,6 +363,7 @@ let dealt = false;
         console.log('entered dealer loop')
 
         if (dHandVal < 17) {
+            //timeout functions idea from 
             setTimeout(function() {
                 let card = deck.pop();
                 dealerHand.push(card);
@@ -356,13 +377,13 @@ let dealt = false;
         } else if (dHandVal > 21) {
             setTimeout(function() {
                 winConditions();
-            }, 1000);
+            }, 1500);
         } else {
             setTimeout(function() {
                 dealerStand = true;
                 $(".header h2").replaceWith("<h2>Dealer Stands</h2>");
                 winConditions();
-            }, 1000);
+            }, 1500);
         }
 
     };

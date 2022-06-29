@@ -24,6 +24,10 @@ body {
     background-color: #181B22;
     color: #DDA74F;
 }
+.button:hover {
+    background-color: #DDA74F;
+    color: #181B22;
+}
 
 .disabled {
     opacity: 0;
