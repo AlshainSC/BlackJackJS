@@ -79,10 +79,59 @@ let dealt = false;
         $(".menu").after(credits)
     });
 
+    $("#deal").on('click', function() {
+        deal();
+
+        let pH = $('<p>')
+        let dH = $('<p>')
+        for (let i = 0; i < playerHand.length; i++) {
+//update html to reflect dealt cards
+//this logic was pushed from the deal() function 
+//keep this in mind for hit() and stay() etc...
+            pH.html(playerHand[i].suit + " " + playerHand[i].value); 
+            
+            dH.html(dealerHand[i].suit + " " + dealerHand[i].value);
+            
+            $("#playerCards").append(pH);
+            $("#dealerCards").append(dH);
+        }
+        if (playerHand.length === 2) {
+//remove deal button when each player has two cards in hand
+            $("#deal").removeClass("button").addClass("disabled");
+            pHandVal = playerHand[0].value + playerHand[1].value;
+            
+        };
+    });
+
+    $("#hit").on('click', function() {
+        //hit logic
+        hit();
+        let _hit = $('<p>');
+        _hit.html(playerHand[playerHand.length - 1].suit + " " + playerHand[playerHand.length - 1].value);
+        $("#playerCards").append(_hit);
+        pHandVal += playerHand[playerHand.length - 1].value;
+        
+        game();
+        
+    });
+
+    $("#stay").on('click', function() {
+        stand();
+        $("#hit").removeClass("button").addClass("disabled");
+        $("#stay").removeClass("button").addClass("disabled");
+        $("#deal").removeClass("button").addClass("disabled");
+
+        
+        game();
+    
+    });
+
 //game function
     function game() {
         if (target === true) { //true is player, false is dealer
             //player turn
+            //move button assignments out of loop, remove/add classes like menu buttons
+            //as it is they are adding on-clicks exponentially with each turn
             $("#deal").on('click', function() {
                 deal();
 
@@ -114,7 +163,7 @@ let dealt = false;
                 _hit.html(playerHand[playerHand.length - 1].suit + " " + playerHand[playerHand.length - 1].value);
                 $("#playerCards").append(_hit);
                 pHandVal += playerHand[playerHand.length - 1].value;
-
+                
                 game();
                 
             });
@@ -171,36 +220,36 @@ let dealt = false;
         if (playerBust === true && dealerBust === true) {
             win.html(playerBustMessage);
             dWin.html(dealerBustMessage);
-            $("playerCards").append(win);
-            $("dealerCards").append(dWin);
+            $("#playerCards").append(win);
+            $("#dealerCards").append(dWin);
         }
         if (playerBlackjack === true && dealerBlackjack === true) {
             win.html(playerBlackjackMessage);
             dWin.html(dealerBlackjackMessage);
-            $("playerCards").append(win);
-            $("dealerCards").append(dWin);
+            $("#playerCards").append(win);
+            $("#dealerCards").append(dWin);
         }
         if (playerBust === true && dealerBlackjack === true) {
             win.html(playerBustMessage);
             dWin.html(dealerBlackjackMessage);
-            $("playerCards").append(win);
-            $("dealerCards").append(dWin);
+            $("#playerCards").append(win);
+            $("#dealerCards").append(dWin);
         }
         if (playerBlackjack === true && dealerBust === true) {
             win.html(playerBlackjackMessage);
             dWin.html(dealerBustMessage);
-            $("playerCards").append(win);
-            $("dealerCards").append(dWin);
+            $("#playerCards").append(win);
+            $("#dealerCards").append(dWin);
         }
         if (pHandVal > dHandVal && playerBust === false) {
             win.html(playerWinMessage);
-            $("playerCards").append(win);
+            $("#playerCards").append(win);
         }
         if (dHandVal > pHandVal && dealerBust === false) {
             dWin.html(dealerWinMessage);
-            $("dealerCards").append(dWin);
+            $("#dealerCards").append(dWin);
         }
-    }
+    };
 
     function updateScores() {
         let pVal = $('<p>');
@@ -259,7 +308,8 @@ let dealt = false;
 //card logic
 
     //create deck
-    function createDeck() {
+    function createDeck() { 
+// reference material for this and shuffle function: https://www.programiz.com/javascript/examples/shuffle-card 
         /* suits: 4
            point values: ace = 1 or 11, numbers = 2-10, face cards = 10 */
         for (let suit in suits) { // loop through suits
