@@ -1,34 +1,40 @@
 
 //intitialize variables
-let cards = [];
-let suits = ['hearts', 'diamonds', 'spades', 'clubs'];
-let deck = [];
-let playerHand = [];
-let dealerHand = [];
-let playerScore = 0; // round score player
-let dealerScore = 0; // round score dealer
-let pHandVal = 0; // current hand value player
-let dHandVal = 0; // current hand value dealer
-let pVal = $('#pScore');
-let dVal = $('#dScore');
-let playerWins = 0;
-let dealerWins = 0;
-let playerBust = false;
-let dealerBust = false;
-let playerBlackjack = false;
-let dealerBlackjack = false;
-let playerStand = false;
-let dealerStand = false;
-let playerBustMessage = "Oh no you're bust!";
-let dealerBustMessage = "Dealer is bust!";
-let playerBlackjackMessage = "You got blackjack!";
-let dealerBlackjackMessage = "Dealer got blackjack!";
-let playerWinMessage = "You win!";
-let dealerWinMessage = "Dealer wins!";
-let target = true;
-let deckVal = false;
-let shuffled = false;
-let dealt = false;
+    //general
+    let cards = [];
+    let suits = ['hearts', 'diamonds', 'spades', 'clubs'];
+    let deck = [];
+    let target = true;
+    let deckVal = false;
+    let shuffled = false;
+    let dealt = false;
+
+    //player
+    let playerHand = [];
+    let playerScore = 0; // round score player
+    let pHandVal = 0; // current hand value player
+    let pVal = $('#pScore');
+    let playerWins = 0;
+    let playerBust = false;
+    let playerBlackjack = false;
+    let playerStand = false;
+    let playerBustMessage = "Oh no you're bust!";
+    let playerBlackjackMessage = "You got blackjack!";
+    let playerWinMessage = "You win!";
+
+    //dealer
+    let dealerHand = [];
+    let dealerScore = 0; // round score dealer
+    let dHandVal = 0; // current hand value dealer
+    let dVal = $('#dScore');
+    let dealerWins = 0;
+    let dealerBust = false;
+    let dealerBlackjack = false;
+    let dealerStand = false;
+    let dealerBustMessage = "Dealer is bust!";
+    let dealerBlackjackMessage = "Dealer got blackjack!";
+    let dealerWinMessage = "Dealer wins!";
+
 //CSS
 
     //setup event listeners to style buttons
