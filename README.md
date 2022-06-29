@@ -1,5 +1,5 @@
 # BlackJack for CodeWorks Admissions
-> Built using jQuery, CSS, and HTML
+> Built using jQuery, CSS, and HTML  
 > Deadline: July 8th, 2022
 
 
@@ -15,15 +15,15 @@
  ======================================= */
 
 
- >29.7.22
- >Basic functionality exists.
- >Buttons are working.
- >Not enough buttons yet
- >Next steps:
- >>More buttons
- >>Get overall scores working
- >>Reset game space for each round
- >>Begin work on formatting/UI
+ >29.7.22  
+ >Basic functionality exists.  
+ >Buttons are working.  
+ >Not enough buttons yet  
+ >Next steps:  
+ >>More buttons  
+ >>Get overall scores working  
+ >>Reset game space for each round  
+ >>Begin work on formatting/UI  
 
 
 
