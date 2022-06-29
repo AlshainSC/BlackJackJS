@@ -77,6 +77,7 @@ let dealt = false;
 
     $('#credits').on('click', function() {
         let credits = $("<div>");
+        credits.html("<h2>Credits</h2><p>Written by Nicholas Larson.  Nibby is a wanker.</p>")
         credits.addClass("credits");
         $(".menu").after(credits)
     });
