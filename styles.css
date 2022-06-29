@@ -1,18 +1,18 @@
 /* Headers */
 .header {
     font-family: 'Times New Roman', Times, serif;
-    color: #272A31;
+    color: #DDA74F;
 }
 /* Body */
 body {
     font-family: 'Times New Roman', Times, serif;
-    background-color: #A76B09;
-    color: #272A31;
+    background-color: #272A31;
+    color: #A76B09;
 }
 
 .hand {
     display: block;
-    color: #272A31;
+    color: #DDA74F;
     width: 600px;
 }
 
@@ -21,12 +21,12 @@ body {
 /* Buttons */
 
 .button {
-    background-color: #181B22;
-    color: #DDA74F;
+    background-color: #A76B09;
+    color: #181B22;
 }
 .button:hover {
     background-color: #DDA74F;
-    color: #181B22;
+    color: #181619;
 }
 
 .disabled {
