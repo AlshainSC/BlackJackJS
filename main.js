@@ -9,6 +9,8 @@ let playerScore = 0; // round score player
 let dealerScore = 0; // round score dealer
 let pHandVal = 0; // current hand value player
 let dHandVal = 0; // current hand value dealer
+let pVal = $('#pScore');
+let dVal = $('#dScore');
 let playerWins = 0;
 let dealerWins = 0;
 let playerBust = false;
@@ -46,7 +48,7 @@ let dealt = false;
 //setup function
     function setup() {
         createDeck();
-        game();
+
     }
 
 //menu function
@@ -54,13 +56,13 @@ let dealt = false;
     //button functions
     $('#newGame').on('click', function() {
         //change menu item based on choice
-
-        $("#hit").removeClass("disabled").addClass("button");
-        $("#stay").removeClass("disabled").addClass("button");
         $("#deal").removeClass("disabled").addClass("button");
         $("#newGame").removeClass("button").addClass("disabled");
         $("#rules").removeClass("button").addClass("disabled");
         $("#credits").removeClass("button").addClass("disabled");
+        let dealCards = $("<h2>");
+        dealCards.html("New Game!  Deal two cards to start!");
+        $(".header").append(dealCards);
         
         //start game
         setup();
@@ -94,13 +96,20 @@ let dealt = false;
             
             $("#playerCards").append(pH);
             $("#dealerCards").append(dH);
+            
         }
+        
         if (playerHand.length === 2) {
 //remove deal button when each player has two cards in hand
-            $("#deal").removeClass("button").addClass("disabled");
             pHandVal = playerHand[0].value + playerHand[1].value;
-            
+            dHandVal = dealerHand[0].value + dealerHand[1].value;
+
+            $("#deal").removeClass("button").addClass("disabled");
+            $("#hit").removeClass("disabled").addClass("button");
+            $("#stay").removeClass("disabled").addClass("button");
+            $(".header h2").replaceWith("<h2>Your turn!</h2>");
         };
+        game();
     });
 
     $("#hit").on('click', function() {
@@ -109,168 +118,98 @@ let dealt = false;
         let _hit = $('<p>');
         _hit.html(playerHand[playerHand.length - 1].suit + " " + playerHand[playerHand.length - 1].value);
         $("#playerCards").append(_hit);
-        pHandVal += playerHand[playerHand.length - 1].value;
-        
-        game();
         
     });
 
     $("#stay").on('click', function() {
-        stand();
+        
         $("#hit").removeClass("button").addClass("disabled");
         $("#stay").removeClass("button").addClass("disabled");
-        $("#deal").removeClass("button").addClass("disabled");
-
+        $(".header h2").replaceWith("<h2>Dealer's turn!</h2>");
+        stand();
         
-        game();
     
     });
 
 //game function
     function game() {
-        if (target === true) { //true is player, false is dealer
-            //player turn
-            //move button assignments out of loop, remove/add classes like menu buttons
-            //as it is they are adding on-clicks exponentially with each turn
-            $("#deal").on('click', function() {
-                deal();
-
-                let pH = $('<p>')
-                let dH = $('<p>')
-                for (let i = 0; i < playerHand.length; i++) {
-//update html to reflect dealt cards
-//this logic was pushed from the deal() function 
-//keep this in mind for hit() and stay() etc...
-                    pH.html(playerHand[i].suit + " " + playerHand[i].value); 
-                    
-                    dH.html(dealerHand[i].suit + " " + dealerHand[i].value);
-                    
-                    $("#playerCards").append(pH);
-                    $("#dealerCards").append(dH);
-                }
-                if (playerHand.length === 2) {
-//remove deal button when each player has two cards in hand
-                    $("#deal").removeClass("button").addClass("disabled");
-                    pHandVal = playerHand[0].value + playerHand[1].value;
-                    
-                };
-            });
-
-            $("#hit").on('click', function() {
-                //hit logic
-                hit();
-                let _hit = $('<p>');
-                _hit.html(playerHand[playerHand.length - 1].suit + " " + playerHand[playerHand.length - 1].value);
-                $("#playerCards").append(_hit);
-                pHandVal += playerHand[playerHand.length - 1].value;
-                
-                game();
-                
-            });
-
-            $("#stay").on('click', function() {
-                stand();
-                $("#hit").removeClass("button").addClass("disabled");
-                $("#stay").removeClass("button").addClass("disabled");
-                $("#deal").removeClass("button").addClass("disabled");
-
-                
-                game();
-            
-            });
-
-        } else if (target === false) {
-            
+        
+        if (target === false) {
+            console.log(dHandVal)
+            //$(".header h2").replaceWith("<h2>Dealer's turn!</h2>");
             dealer();
-            updateScores();
-        } 
-        if (playerStand === true && dealerStand === true) {
-            winConditions();
+
+        } else {
+            if (playerStand === true && dealerStand === true) {
+                
+                console.log('entered else if')
+                $(".header h2").replaceWith("<h2>Round Over</h2>");
+                winConditions();
+            }
         }
+        updateScores();
     };
 
     function winConditions() {
-        let win = $("<p>");
-        let dWin = $("<p>");
+        
+        let win = $("<h2>")
         console.log("wincon loop has started")
+        console.log(pHandVal, dHandVal)
         if (pHandVal > 21) {
-            playerBust = true;
-        }
-        if (dHandVal > 21) {
-            dealerBust = true;
-        }
-        if (pHandVal === 21) {
-            playerBlackjack = true;
-        }
-        if (dHandVal === 21) {
-            dealerBlackjack = true;
-        }
-        if (playerBust === true) {
-            win.html(playerBustMessage);
-        }
-        if (dealerBust === true) {
-            dWin.html(dealerBustMessage);
-        }
-        if (playerBlackjack === true) {
-            win.html(playerBlackjackMessage);
-        }
-        if (dealerBlackjack === true) {
-            dWin.html(dealerBlackjackMessage);
-        }
-        if (playerBust === true && dealerBust === true) {
-            win.html(playerBustMessage);
-            dWin.html(dealerBustMessage);
-            $("#playerCards").append(win);
-            $("#dealerCards").append(dWin);
-        }
-        if (playerBlackjack === true && dealerBlackjack === true) {
-            win.html(playerBlackjackMessage);
-            dWin.html(dealerBlackjackMessage);
-            $("#playerCards").append(win);
-            $("#dealerCards").append(dWin);
-        }
-        if (playerBust === true && dealerBlackjack === true) {
-            win.html(playerBustMessage);
-            dWin.html(dealerBlackjackMessage);
-            $("#playerCards").append(win);
-            $("#dealerCards").append(dWin);
-        }
-        if (playerBlackjack === true && dealerBust === true) {
-            win.html(playerBlackjackMessage);
-            dWin.html(dealerBustMessage);
-            $("#playerCards").append(win);
-            $("#dealerCards").append(dWin);
-        }
-        if (pHandVal > dHandVal && playerBust === false) {
+            win.html(dealerWinMessage);
+            dealerWins++;
+            $(".header h2").replaceWith(win);
+        } else if (dHandVal > 21) {
             win.html(playerWinMessage);
-            $("#playerCards").append(win);
-        }
-        if (dHandVal > pHandVal && dealerBust === false) {
-            dWin.html(dealerWinMessage);
-            $("#dealerCards").append(dWin);
+            playerWins++;
+            $(".header h2").replaceWith(win);
+        } else if (pHandVal > 21 && dHandVal > 21) {
+            win.html("You're both bust!");
+            $(".header h2").replaceWith(win);
+        } else if (pHandVal < dHandVal) {
+            win.html(dealerWinMessage);
+            dealerWins++;
+            $(".header h2").replaceWith(win);
+        } else if (pHandVal > dHandVal) {
+            win.html(playerWinMessage);
+            playerWins++;
+            $(".header h2").replaceWith(win);
+        } else {
+            win.html("<h2>It's a tie!</h2>");
+            $(".header h2").replaceWith(win);
         }
     };
 
     function updateScores() {
+        //referencing https://github.com/jacquelynmarcella/blackjack/blob/master/blackjack.html
+        //line 69 && associated logic
+        //Was having a difficult time getting scores to update on button press, without adding multiplicatively.
+        //Initial attempts at logic remain commented out below.
+        $(pVal).text("Current Hand Value: " + pHandVal);
+        $(dVal).text("Current Hand Value: " + dHandVal);
+
+
+        /*pHandVal = 0;
+        dHandVal = 0;
+
         let pVal = $('<p>');
         let dVal = $('<p>');
 
-        /*for (let i = 0; i < playerHand.length; i++) {
+        for (let i = 0; i < playerHand.length; i++) {
             
             pHandVal += playerHand[i].value;
             
-        }; */
-
+        };
         for (let i = 0; i < dealerHand.length; i++) {
             
             dHandVal += dealerHand[i].value;
         
         }; 
 
-        pVal.html(`<h3>Score: ${pHandVal}`)
-        dVal.html(`<h3>Score: ${dHandVal}`)
+        pVal.html(`<h3>Hand Value: ${pHandVal}`)
+        dVal.html(`<h3>Hand Value: ${dHandVal}`)
         $("#pScore").replaceWith(pVal);
-        $("#dScore").replaceWith(dVal);
+        $("#dScore").replaceWith(dVal);*/
 
     };
 
@@ -360,6 +299,7 @@ let dealt = false;
         };
         shuffled = true;
         console.log("Deck shuffled");
+        game();
     };
 
     //deal cards
@@ -380,36 +320,49 @@ let dealt = false;
 
     //hit
     function hit() {
-        let card = deck.pop();
-        playerHand.push(card);
-        $("#playerCards").append(card)
-        target = false;
-
+        if (pHandVal < 21) {
+            let card = deck.pop();
+            playerHand.push(card);
+            pHandVal += card.value;
+            $("#playerCards").append(card)
+            game();
+        } else {
+            winConditions();
+        }
     }
 
     //stand
     function stand() {
         playerStand = true;
         target = false;
-
+        game();
     }
 
 //dealer logic
     function dealer() {
-            if (dHandVal < 17) {
+        console.log('entered dealer loop')
+
+        if (dHandVal < 17) {
+            setTimeout(function() {
                 let card = deck.pop();
                 dealerHand.push(card);
-                let _hit = $('<p>');
+                let _hit = $("<p>");
                 _hit.html(dealerHand[dealerHand.length - 1].suit + " " + dealerHand[dealerHand.length - 1].value);
                 $("#dealerCards").append(_hit);
-
-            
-            } else if (dHandVal >= 17) {
-                dealerStand = true;
-                target = true;
-
+                $(".header h2").replaceWith("<h2>Dealer Hits</h2>");
+                dHandVal += card.value;
                 game();
+            }, 1500);
+        } else if (dHandVal > 21) {
+            setTimeout(function() {
+                winConditions();
+            }, 1000);
+        } else {
+            setTimeout(function() {
+                dealerStand = true;
+                $(".header h2").replaceWith("<h2>Dealer Stands</h2>");
+                winConditions();
+            }, 1000);
+        }
 
-            };
-        
     };
