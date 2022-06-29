@@ -134,9 +134,14 @@ let dealt = false;
     
     });
 
+    $("#playAgain").on('click', function() {
+        $(".roundsWon h3").text("Player Wins: " + playerWins + " Dealer Wins: " + dealerWins);
+        roundOver();
+    });
+
 //game function
     function game() {
-        
+
         if (target === false) {
             console.log(dHandVal)
             //$(".header h2").replaceWith("<h2>Dealer's turn!</h2>");
@@ -154,7 +159,6 @@ let dealt = false;
     };
 
     function winConditions() {
-        
         let win = $("<h2>")
         console.log("wincon loop has started")
         console.log(pHandVal, dHandVal)
@@ -162,25 +166,38 @@ let dealt = false;
             win.html(dealerWinMessage);
             dealerWins++;
             $(".header h2").replaceWith(win);
+            
+            $("#playAgain").removeClass("disabled").addClass("button");
         } else if (dHandVal > 21) {
             win.html(playerWinMessage);
             playerWins++;
             $(".header h2").replaceWith(win);
+            
+            $("#playAgain").removeClass("disabled").addClass("button");
         } else if (pHandVal > 21 && dHandVal > 21) {
             win.html("You're both bust!");
             $(".header h2").replaceWith(win);
+            
+            $("#playAgain").removeClass("disabled").addClass("button");
         } else if (pHandVal < dHandVal) {
             win.html(dealerWinMessage);
             dealerWins++;
             $(".header h2").replaceWith(win);
+            
+            $("#playAgain").removeClass("disabled").addClass("button");
         } else if (pHandVal > dHandVal) {
             win.html(playerWinMessage);
             playerWins++;
             $(".header h2").replaceWith(win);
+            
+            $("#playAgain").removeClass("disabled").addClass("button");
         } else {
             win.html("<h2>It's a tie!</h2>");
             $(".header h2").replaceWith(win);
+            
+            $("#playAgain").removeClass("disabled").addClass("button");
         }
+
     };
 
     function updateScores() {
@@ -231,6 +248,11 @@ let dealt = false;
         pHandVal = 0;
         dHandVal = 0;
         target = true;
+        $("#playerCards p").remove();
+        $("#dealerCards p").remove();
+        
+        $("#deal").removeClass("disabled").addClass("button");
+        $("#playAgain").addClass("disabled").removeClass("button");
 
         setup();
     }
