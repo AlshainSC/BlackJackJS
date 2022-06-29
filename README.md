@@ -14,3 +14,16 @@
     
  ======================================= */
 
+
+ >29.7.22
+ >Basic functionality exists.
+ >Buttons are working.
+ >Not enough buttons yet
+ >Next steps:
+ >>More buttons
+ >>Get overall scores working
+ >>Reset game space for each round
+ >>Begin work on formatting/UI
+
+
+
