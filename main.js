@@ -15,11 +15,8 @@
     let pHandVal = 0; // current hand value player
     let pVal = $('#pScore');
     let playerWins = 0;
-    let playerBust = false;
-    let playerBlackjack = false;
     let playerStand = false;
     let playerBustMessage = "Oh no you're bust!";
-    let playerBlackjackMessage = "You got blackjack!";
     let playerWinMessage = "You win!";
 
     //dealer
@@ -28,11 +25,8 @@
     let dHandVal = 0; // current hand value dealer
     let dVal = $('#dScore');
     let dealerWins = 0;
-    let dealerBust = false;
-    let dealerBlackjack = false;
     let dealerStand = false;
     let dealerBustMessage = "Dealer is bust!";
-    let dealerBlackjackMessage = "Dealer got blackjack!";
     let dealerWinMessage = "Dealer wins!";
 
 //CSS
@@ -247,10 +241,6 @@
         dealerHand = [];
         playerStand = false;
         dealerStand = false;
-        playerBust = false;
-        dealerBust = false;
-        playerBlackjack = false;
-        dealerBlackjack = false;
         pHandVal = 0;
         dHandVal = 0;
         target = true;
