@@ -8,6 +8,7 @@
     let deckVal = false;
     let shuffled = false;
     let dealt = false;
+    let suitsSymbols = " ♥ ♦ ♠ ♣"; 
 
     //player
     let playerHand = [];
@@ -155,7 +156,7 @@
 
     $("#playAgain").on('click', function() {
         let won = $("<h2>");
-        won.html("Player Wins: " + playerWins + " Dealer Wins: " + dealerWins)
+        won.html("Dealer Wins: " + dealerWins + "&nbsp &nbsp &nbsp" + suitsSymbols + "&nbsp &nbsp &nbsp" + " Player Wins: " + playerWins)
         $(".roundsWon h2").replaceWith(won);
         roundOver();
     });

@@ -88,9 +88,9 @@ img {
     
 }
 .deck img{
-    display: inline;
+    display: fixed;
     border-radius: 20px;
-    margin-top: 250px;
+    margin-top: 200px;
     height: 175px;
     width: 125px;
 }
@@ -108,7 +108,7 @@ img {
 @keyframes playerCard {
     from {
         margin-left: -700px;
-        margin-bottom: -400px;
+        margin-bottom: -350px;
     }
     to {
         margin-left: 0px;
@@ -119,7 +119,7 @@ img {
 @keyframes dealerCard {
     from {
         margin-right: -700px;
-        margin-bottom: -400px;
+        margin-bottom: -350px;
     }
     to {
         margin-right: 0px;
