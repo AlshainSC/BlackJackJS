@@ -1,6 +1,6 @@
 # BlackJack for CodeWorks Admissions
 > Built using jQuery, CSS, and HTML  
-> Deadline: July 8th, 2022
+> Deadline: July 8th, 2022  
 > Play here: https://alshainsc.github.io/BlackJackJS/  
 
 
