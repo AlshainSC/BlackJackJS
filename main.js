@@ -55,14 +55,14 @@
 
     //button functions
     $('#newGame').on('click', function() {
+        let game = $("<h3>")
         //change menu item based on choice
         $("#deal").removeClass("disabled").addClass("button");
         $("#newGame").removeClass("button").addClass("disabled");
-        $("#rules").removeClass("button").addClass("disabled");
-        $("#credits").removeClass("button").addClass("disabled");
-        let dealCards = $("<h3>");
-        dealCards.html("New Game!  Deal two cards to start!");
-        $(".roundsWon h3").replaceWith(dealCards);
+        /*$("#rules").removeClass("button").addClass("disabled");
+        $("#credits").removeClass("button").addClass("disabled");*/
+        game.html("New Game!  Deal two cards to start!");
+        $(".roundsWon h3").replaceWith(game);
         
         //start game
         setup();
@@ -71,11 +71,18 @@
     $('#rules').on('click', function() {
         console.log('works')
         let rules = $("<h4>");
-        rules.html("The goal is to, using the cards you are dealt, get as close to 21 as possible.<br>The cards are dealt in a random order, and you can choose to hit or stay.");
-        $(".menu").after(rules)
+        rules.html("The goal of the game is to reach 21 points.<br>\
+        If you go over 21, you lose!<br>\
+        If you and the dealer both go over 21, you both lose!<br>\
+        Pressing the deal button will deal one card to each player.<br>\
+        Pressing the hit button will deal another card to the player.<br>\
+        Pressing the stay button will end the player's turn.<br>\
+        Once both the player and the dealer have finished their turns,<br>\
+        the winner is determined.")
+        $("#rules").after(rules)
         setTimeout(function() {
             $(rules).remove();
-        }, 1500);
+        }, 3000);
     });
 
     $('#credits').on('click', function() {
@@ -89,7 +96,7 @@
 
     $("#deal").on('click', function() {
         deal();
-
+        let turn = $("<h3>");
        /* let pH = $('<p>')
         let dH = $('<p>')
         for (let i = 0; i < playerHand.length; i++) {
@@ -122,7 +129,8 @@
             $("#deal").removeClass("button").addClass("disabled");
             $("#hit").removeClass("disabled").addClass("button");
             $("#stay").removeClass("disabled").addClass("button");
-            $(".roundsWon h3").replaceWith("Your turn!");
+            turn.html("Your Turn!");
+            $(".roundsWon h3").replaceWith(turn);
         };
         game();
     });
@@ -133,18 +141,25 @@
     });
 
     $("#stay").on('click', function() {
-        
+        let turn = $("<h3>");
         $("#hit").removeClass("button").addClass("disabled");
         $("#stay").removeClass("button").addClass("disabled");
-        $(".roundsWon h3").replaceWith("Dealer's turn!");
+        turn.html("Dealer's Turn!");
+        $(".roundsWon h3").replaceWith(turn);
         stand();
         
     
     });
 
     $("#playAgain").on('click', function() {
-        $(".roundsWon h3").text("Player Wins: " + playerWins + " Dealer Wins: " + dealerWins);
+        let won = $("<h2>");
+        won.html("Player Wins: " + playerWins + " Dealer Wins: " + dealerWins)
+        $(".roundsWon h2").replaceWith(won);
         roundOver();
+    });
+
+    $("#reset").on('click', function() {
+        gameOver();
     });
 
 //game function
@@ -170,12 +185,12 @@
         let win = $("<h3>")
         console.log("wincon loop has started")
         console.log(pHandVal, dHandVal)
-        if (pHandVal > 21 && dHandVal < 21) {
+        if (pHandVal > 21 && dHandVal <= 21) {
             win.html(dealerWinMessage);
             dealerWins++;
             $(".roundsWon h3").replaceWith(win);
             $("#playAgain").removeClass("disabled").addClass("button");
-        } else if (dHandVal > 21 && pHandVal < 21) {
+        } else if (dHandVal > 21 && pHandVal <= 21) {
             win.html(playerWinMessage);
             playerWins++;
             $(".roundsWon h3").replaceWith(win);
@@ -260,14 +275,41 @@
 
 //game over function
     function gameOver() {
+        let winner = $("<h3>");
+        if (playerWins > dealerWins) {
+            winner.html("Game Over!<br>Player Wins!");
+        } else if(playerWins < dealerWins) {
+            winner.html("Game Over!<br>Dealer Wins!");
+        } else {
+            winner.html("Game Over!<br>It's a tie!");
+        }
         $("#hit").removeClass("button").addClass("disabled");
         $("#stay").removeClass("button").addClass("disabled");
         $("#deal").removeClass("button").addClass("disabled");
         $("#newGame").removeClass("disabled").addClass("button");
-        $("#rules").removeClass("disabled").addClass("button");
-        $("#credits").removeClass("disabled").addClass("button");
+
         playerScore = 0;
         dealerScore = 0;
+        playerWins = 0;
+        dealerWins = 0;
+        deck = [];
+        playerHand = [];
+        dealerHand = [];
+        playerStand = false;
+        dealerStand = false;
+        pHandVal = 0;
+        dHandVal = 0;
+        target = true;
+        $("#playerCards p").remove();
+        $("#dealerCards p").remove();
+        $("#playerCards img").remove();
+        $("#dealerCards img").remove();
+        
+        $(".roundsWon h2").replaceWith("<h2>Game Over!</h2>");
+        setTimeout(function() {
+            $(".roundsWon h2").replaceWith("<h2>New Game?</h2>");
+        }, 5000);
+        $("roundsWon h3").replaceWith(winner);
     }
 
 //card logic
@@ -396,13 +438,15 @@
 //dealer logic
     function dealer() {
         console.log('entered dealer loop')
+        let turn = $("<h3>");
 
         if (dHandVal < 17) {
             //timeout functions idea from 
             setTimeout(function() {
                 let card = deck.pop();
                 dealerHand.push(card);
-                $(".roundsWon h3").replaceWith("Dealer Hits");
+                turn.html("Dealer Hits!")
+                $(".roundsWon h3").replaceWith(turn);
                 dHandVal += card.value;
                 cardImg(card).appendTo("#dealerCards");
                 game();
@@ -414,7 +458,8 @@
         } else {
             setTimeout(function() {
                 dealerStand = true;
-                $(".roundsWon h3").replaceWith("Dealer Stands");
+                turn.html("Dealer Stands!")
+                $(".roundsWon h3").replaceWith(turn);
                 winConditions();
             }, 1500);
         }
