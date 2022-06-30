@@ -382,13 +382,13 @@
     function deal() {
         
         let totalCards = 0;
-        if (playerHand.length < 2 && totalCards < 4) {
+        while (playerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
             playerHand.push(card);
             cardImg(card).prependTo("#playerCards");
             totalCards++;
         }
-        if (dealerHand.length < 2 && totalCards < 4) {
+        while (dealerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
             dealerHand.push(card);
             cardImg(card).appendTo("#dealerCards");
