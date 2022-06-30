@@ -4,11 +4,7 @@
     color: #A76B09;
     margin: auto;
     text-align: center;
-    font-size: 30px;
-    font-weight: bold;
     padding: 10px;
-    display: block;
-
 }
 #reset {
     
@@ -104,7 +100,8 @@ img {
     animation-name: dealerCard;
     animation-duration: 2s;
 }
-
+/* Animation */
+/* Animation resources: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations */
 @keyframes playerCard {
     from {
         margin-left: -700px;

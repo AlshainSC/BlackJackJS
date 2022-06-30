@@ -72,27 +72,33 @@
     $('#rules').on('click', function() {
         console.log('works')
         let rules = $("<h4>");
-        rules.html("The goal of the game is to reach 21 points.<br>\
-        If you go over 21, you lose!<br>\
-        If you and the dealer both go over 21, you both lose!<br>\
-        Pressing the deal button will deal one card to each player.<br>\
-        Pressing the hit button will deal another card to the player.<br>\
-        Pressing the stay button will end the player's turn.<br>\
+        rules.html("The goal of the game is to reach 21 points.<br><br>\
+        If you go over 21, you lose!<br><br>\
+        If you and the dealer both go over 21, you both lose!<br><br>\
+        Pressing the deal button will deal one card to each player.<br><br>\
+        Pressing the hit button will deal another card to the player.<br><br>\
+        Pressing the stay button will end the player's turn.<br><br>\
         Once both the player and the dealer have finished their turns,<br>\
         the winner is determined.")
         $("#rules").after(rules)
         setTimeout(function() {
             $(rules).remove();
-        }, 3000);
+        }, 30000);
     });
 
     $('#credits').on('click', function() {
         let credits = $("<h4>");
-        credits.html("Nibby is a Wanker");
+        credits.html("Nicholas Larson<br><br>\
+        With special thanks to:<br><br>\
+        The Larson Clan: the best guinea pigs<br><br>\
+        Peter: god-tier wizard coder extraordinaire<br><br>\
+        Klaus: absolute nonstop heckling<br><br>\
+        Nibby - not really a wanker<br><br>\
+        --see @readme for full source list--");
         $("#credits").after(credits);
         setTimeout(function() {
             $(credits).remove();
-        }, 1500);
+        }, 10000);
     });
 
     $("#deal").on('click', function() {
@@ -319,7 +325,7 @@
 
     //create deck
     function createDeck() { 
-// reference material for this and shuffle function: https://www.programiz.com/javascript/examples/shuffle-card 
+
         /* suits: 4
            point values: ace = 1 or 11, numbers = 2-10, face cards = 10 */
         for (let suit in suits) { // loop through suits
@@ -391,7 +397,7 @@
 
         for (let i = 0; i < playerHand.length; i++) {
             if (playerHand[i].value === 1) {
-                if (playerHand[i].value + 11 > 21) {
+                if (playerHand[i].value + playerHand[i + 1].value > 21) {
                     playerHand[i].value = 1;
                 } else {
                     playerHand[i].value = 11;
