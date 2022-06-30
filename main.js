@@ -2,7 +2,7 @@
 //intitialize variables
     //general
     let cards = [];
-    let suits = ['hearts', 'diamonds', 'spades', 'clubs'];
+    let suits = ['HEART', 'DIAMOND', 'SPADE', 'CLUB'];
     let deck = [];
     let target = true;
     let deckVal = false;
@@ -60,9 +60,9 @@
         $("#newGame").removeClass("button").addClass("disabled");
         $("#rules").removeClass("button").addClass("disabled");
         $("#credits").removeClass("button").addClass("disabled");
-        let dealCards = $("<h2>");
+        let dealCards = $("<h3>");
         dealCards.html("New Game!  Deal two cards to start!");
-        $(".header").append(dealCards);
+        $(".roundsWon h3").replaceWith(dealCards);
         
         //start game
         setup();
@@ -70,14 +70,17 @@
 
     $('#rules').on('click', function() {
         console.log('works')
-        let rules = $("<p>");
+        let rules = $("<h4>");
         rules.html("The goal is to, using the cards you are dealt, get as close to 21 as possible.<br>The cards are dealt in a random order, and you can choose to hit or stay.");
         $(".menu").after(rules)
+        setTimeout(function() {
+            $(rules).remove();
+        }, 1500);
     });
 
     $('#credits').on('click', function() {
-        let credits = $("<h2>");
-        credits.html("<h2>Nibby is a Wanker</h2>");
+        let credits = $("<h4>");
+        credits.html("Nibby is a Wanker");
         $("#credits").after(credits);
         setTimeout(function() {
             $(credits).remove();
@@ -87,7 +90,7 @@
     $("#deal").on('click', function() {
         deal();
 
-        let pH = $('<p>')
+       /* let pH = $('<p>')
         let dH = $('<p>')
         for (let i = 0; i < playerHand.length; i++) {
 //update html to reflect dealt cards
@@ -99,8 +102,17 @@
             
             $("#playerCards").append(pH);
             $("#dealerCards").append(dH);
+
             
-        }
+            
+            
+        } */
+        /* playerHand.forEach(function(card) {
+            cardImg(card).appendTo("#playerCards");
+        });
+        dealerHand.forEach(function(card) {
+            cardImg(card).appendTo("#dealerCards");
+        }) */
         
         if (playerHand.length === 2) {
 //remove deal button when each player has two cards in hand
@@ -110,7 +122,7 @@
             $("#deal").removeClass("button").addClass("disabled");
             $("#hit").removeClass("disabled").addClass("button");
             $("#stay").removeClass("disabled").addClass("button");
-            $(".header h2").replaceWith("<h2>Your turn!</h2>");
+            $(".roundsWon h3").replaceWith("Your turn!");
         };
         game();
     });
@@ -118,17 +130,13 @@
     $("#hit").on('click', function() {
         //hit logic
         hit();
-        let _hit = $('<p>');
-        _hit.html(playerHand[playerHand.length - 1].suit + " " + playerHand[playerHand.length - 1].value);
-        $("#playerCards").append(_hit);
-        
     });
 
     $("#stay").on('click', function() {
         
         $("#hit").removeClass("button").addClass("disabled");
         $("#stay").removeClass("button").addClass("disabled");
-        $(".header h2").replaceWith("<h2>Dealer's turn!</h2>");
+        $(".roundsWon h3").replaceWith("Dealer's turn!");
         stand();
         
     
@@ -144,14 +152,14 @@
 
         if (target === false) {
             console.log(dHandVal)
-            //$(".header h2").replaceWith("<h2>Dealer's turn!</h2>");
+            //$(".roundsWon h2").replaceWith("<h2>Dealer's turn!</h2>");
             dealer();
 
         } else {
             if (playerStand === true && dealerStand === true) {
                 
                 console.log('entered else if')
-                $(".header h2").replaceWith("<h2>Round Over</h2>");
+                $(".roundsWon h3").replaceWith("Round Over");
                 winConditions();
             }
         }
@@ -159,42 +167,36 @@
     };
 
     function winConditions() {
-        let win = $("<h2>")
+        let win = $("<h3>")
         console.log("wincon loop has started")
         console.log(pHandVal, dHandVal)
-        if (pHandVal > 21) {
+        if (pHandVal > 21 && dHandVal < 21) {
             win.html(dealerWinMessage);
             dealerWins++;
-            $(".header h2").replaceWith(win);
-            
+            $(".roundsWon h3").replaceWith(win);
             $("#playAgain").removeClass("disabled").addClass("button");
-        } else if (dHandVal > 21) {
+        } else if (dHandVal > 21 && pHandVal < 21) {
             win.html(playerWinMessage);
             playerWins++;
-            $(".header h2").replaceWith(win);
-            
+            $(".roundsWon h3").replaceWith(win);
             $("#playAgain").removeClass("disabled").addClass("button");
         } else if (pHandVal > 21 && dHandVal > 21) {
             win.html("You're both bust!");
-            $(".header h2").replaceWith(win);
-            
+            $(".roundsWon h3").replaceWith(win);
             $("#playAgain").removeClass("disabled").addClass("button");
         } else if (pHandVal < dHandVal) {
             win.html(dealerWinMessage);
             dealerWins++;
-            $(".header h2").replaceWith(win);
-            
+            $(".roundsWon h3").replaceWith(win);
             $("#playAgain").removeClass("disabled").addClass("button");
         } else if (pHandVal > dHandVal) {
             win.html(playerWinMessage);
             playerWins++;
-            $(".header h2").replaceWith(win);
-            
+            $(".roundsWon h3").replaceWith(win);
             $("#playAgain").removeClass("disabled").addClass("button");
         } else {
-            win.html("<h2>It's a tie!</h2>");
-            $(".header h2").replaceWith(win);
-            
+            win.html("<h3>It's a tie!</h2>");
+            $(".roundsWon h3").replaceWith(win);
             $("#playAgain").removeClass("disabled").addClass("button");
         }
 
@@ -247,6 +249,8 @@
         target = true;
         $("#playerCards p").remove();
         $("#dealerCards p").remove();
+        $("#playerCards img").remove();
+        $("#dealerCards img").remove();
         
         $("#deal").removeClass("disabled").addClass("button");
         $("#playAgain").addClass("disabled").removeClass("button");
@@ -330,11 +334,13 @@
         if (playerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
             playerHand.push(card);
+            cardImg(card).appendTo("#playerCards");
             totalCards++;
         }
         if (dealerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
             dealerHand.push(card);
+            cardImg(card).appendTo("#dealerCards");
             totalCards++;
         };
 
@@ -359,6 +365,13 @@
 
 
     };
+    
+    function cardImg(card) {
+        console.log("image loaded")
+        let cardImg = $("<img>");
+        cardImg.attr("src", `assets/${card.suit}-${card.value}.svg`);
+        return cardImg;
+    }
 
     //hit
     function hit() {
@@ -366,7 +379,7 @@
             let card = deck.pop();
             playerHand.push(card);
             pHandVal += card.value;
-            $("#playerCards").append(card)
+            cardImg(card).appendTo("#playerCards");
             game();
         } else {
             winConditions();
@@ -389,11 +402,9 @@
             setTimeout(function() {
                 let card = deck.pop();
                 dealerHand.push(card);
-                let _hit = $("<p>");
-                _hit.html(dealerHand[dealerHand.length - 1].suit + " " + dealerHand[dealerHand.length - 1].value);
-                $("#dealerCards").append(_hit);
-                $(".header h2").replaceWith("<h2>Dealer Hits</h2>");
+                $(".roundsWon h3").replaceWith("Dealer Hits");
                 dHandVal += card.value;
+                cardImg(card).appendTo("#dealerCards");
                 game();
             }, 1500);
         } else if (dHandVal > 21) {
@@ -403,7 +414,7 @@
         } else {
             setTimeout(function() {
                 dealerStand = true;
-                $(".header h2").replaceWith("<h2>Dealer Stands</h2>");
+                $(".roundsWon h3").replaceWith("Dealer Stands");
                 winConditions();
             }, 1500);
         }

@@ -11,6 +11,7 @@
     JavaScript and JQuery by Jon Duckett: https://g.co/kgs/iYCN2E
     Eloquent Javascript by Marijn Haverbeke: https://eloquentjavascript.net/
     CodeWorks: https://www.codeworks.com/
+    Playing Card Vectors: https://totalnonsense.com/open-source-vector-playing-cards/
     
  ======================================= */
 
