@@ -60,7 +60,6 @@ body {
     color: #A76B09;
     width: 500px;
     margin: auto;
-    text-align: center;
     font-size: 20px;
     font-weight: bold;
     padding: 10px;
@@ -80,13 +79,59 @@ body {
 }
 
 img {
-    display: inline-flexbox;
+    
     margin: auto;
     text-align: center;
     height: 150px;
     width: 125px;
     padding: 10px;
+    
 }
+.deck img{
+    display: inline;
+    border-radius: 20px;
+    margin-top: 250px;
+    height: 175px;
+    width: 125px;
+}
+
+#playerHand img {
+    animation-name: playerCard;
+    animation-duration: 2s;
+}
+
+#dealerHand img {
+    animation-name: dealerCard;
+    animation-duration: 2s;
+}
+
+@keyframes playerCard {
+    from {
+        margin-right: 500px;
+        margin-bottom: -300px;
+    }
+    to {
+        margin-right: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+@keyframes dealerCard {
+    from {
+        margin-right: -500px;
+        margin-bottom: -300px;
+    }
+    to {
+        margin-right: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+
+
+
+
+
 
 
 
@@ -178,6 +223,8 @@ img {
     border-radius: 10px;
     
 }
+
+
 
 
 

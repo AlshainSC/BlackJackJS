@@ -132,6 +132,8 @@
             turn.html("Your Turn!");
             $(".roundsWon h3").replaceWith(turn);
         };
+
+        
         game();
     });
 
@@ -405,6 +407,7 @@
             }
         }
 
+        
 
     };
     
