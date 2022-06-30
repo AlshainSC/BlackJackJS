@@ -107,19 +107,19 @@ img {
 
 @keyframes playerCard {
     from {
-        margin-right: 500px;
-        margin-bottom: -300px;
+        margin-left: -700px;
+        margin-bottom: -400px;
     }
     to {
-        margin-right: 0px;
+        margin-left: 0px;
         margin-bottom: 0px;
     }
 }
 
 @keyframes dealerCard {
     from {
-        margin-right: -500px;
-        margin-bottom: -300px;
+        margin-right: -700px;
+        margin-bottom: -400px;
     }
     to {
         margin-right: 0px;

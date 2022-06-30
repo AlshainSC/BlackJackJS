@@ -378,7 +378,7 @@
         if (playerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
             playerHand.push(card);
-            cardImg(card).appendTo("#playerCards");
+            cardImg(card).prependTo("#playerCards");
             totalCards++;
         }
         if (dealerHand.length < 2 && totalCards < 4) {
@@ -424,7 +424,7 @@
             let card = deck.pop();
             playerHand.push(card);
             pHandVal += card.value;
-            cardImg(card).appendTo("#playerCards");
+            cardImg(card).prependTo("#playerCards");
             game();
         } else {
             winConditions();
