@@ -237,6 +237,7 @@
     function roundOver() {
 //reset variables
 //potentially better as a separate function
+        deck = [];
         playerHand = [];
         dealerHand = [];
         playerStand = false;
