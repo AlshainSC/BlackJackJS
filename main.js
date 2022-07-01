@@ -229,7 +229,7 @@
     };
 
     function updateScores() {
-        //referencing https://github.com/jacquelynmarcella/blackjack/blob/master/blackjack.html
+        //referencing https://github.com/jacquelynmarcella/blackjack/blob/master/js/main.js
         //line 69 && associated logic
         //Was having a difficult time getting scores to update on button press, without adding multiplicatively.
         //Initial attempts at logic remain commented out below.
@@ -264,7 +264,7 @@
 //round over, to next round
     function roundOver() {
 //reset variables
-//potentially better as a separate function
+//potentially better as a separate function  <-- was made into a separate function and it is better this way.
         deck = [];
         playerHand = [];
         dealerHand = [];
@@ -294,11 +294,14 @@
         } else {
             winner.html("Game Over!<br>It's a tie!");
         }
+
+        //reset buttons
         $("#hit").removeClass("button").addClass("disabled");
         $("#stay").removeClass("button").addClass("disabled");
         $("#deal").removeClass("button").addClass("disabled");
         $("#newGame").removeClass("disabled").addClass("button");
 
+        //reset variables
         playerScore = 0;
         dealerScore = 0;
         playerWins = 0;
@@ -334,23 +337,32 @@
             for (let i = 1; i < 14; i++) { // for each suit, loop through numbers
                 let card = {
                     suit: suits[suit],
+                    face: i,
                     value: i
                 }
+                console.log(i)
+                console.log(card)
+                
                 deck.push(card);
             }
+            console.log(suits[suit])
+            console.log(deck)
         };
 
         for (let card in deck) { 
 //check face cards and assign appropriate point value
 //assign face cards with appropriate names: Jack, Queen, King, Ace(?)
             
-            if (deck[card].value === 11) { //jack
+            if (deck[card].value === 11) {
+                deck[card].face = 'JACK' //jack
                 deck[card].value = 10;
             }
-            if (deck[card].value === 12) { //queen
+            if (deck[card].value === 12) {
+                deck[card].face = 'QUEEN' //queen
                 deck[card].value = 10;
             }
-            if (deck[card].value === 13) { //king
+            if (deck[card].value === 13) {
+                deck[card].face = 'KING' //king
                 deck[card].value = 10;
             }
 
@@ -378,6 +390,7 @@
         shuffled = true;
         console.log("Deck shuffled");
         game();
+        console.log(deck)
     };
 
     //deal cards
@@ -387,13 +400,13 @@
         while (playerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
             playerHand.push(card);
-            cardImg(card).prependTo("#playerCards");
+            cardImg(card).appendTo("#playerCards");
             totalCards++;
         }
         while (dealerHand.length < 2 && totalCards < 4) {
             let card = deck.pop();
             dealerHand.push(card);
-            cardImg(card).appendTo("#dealerCards");
+            cardImg(card).prependTo("#dealerCards");
             totalCards++;
         };
 
@@ -423,7 +436,20 @@
     function cardImg(card) {
         console.log("image loaded")
         let cardImg = $("<img>");
-        cardImg.attr("src", `assets/${card.suit}-${card.value}.svg`);
+        
+        if (isNaN(card.face) === true) {
+            if (card.face = 'JACK') {
+                cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
+            }
+            if (card.face = 'QUEEN') {
+                cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
+            }
+            if (card.face = 'KING') {
+                cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
+            }
+        } else {
+            cardImg.attr("src", `assets/${card.suit}-${card.value}.svg`);
+        }
         return cardImg;
     }
 
