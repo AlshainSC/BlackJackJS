@@ -122,7 +122,7 @@ body {
 #playerHand img {
     
     animation-name: playerCard;
-    animation-duration: 5s;
+    animation-duration: 2s;
     transition: 0.4s ease-out;
     box-shadow: -1rem 0 3rem #272A31;
     position: relative;
@@ -135,7 +135,7 @@ body {
 #dealerHand img {
     
     animation-name: dealerCard;
-    animation-duration: 5s;
+    animation-duration: 2s;
     transition: 0.4s ease-out;
     box-shadow: -1rem 0 3rem #272A31;
     position: relative;
