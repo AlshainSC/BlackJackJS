@@ -1,10 +1,14 @@
 /* Headers */
+.header {
+    display: block;
+}
 .header h1 {
     font-family: 'Times New Roman', Times, serif;
     color: #A76B09;
     margin: auto;
     text-align: center;
     padding: 10px;
+    display: inline-block;
 }
 #reset {
     
@@ -43,27 +47,33 @@ body {
     font-size: 20px;
     margin: auto;
     text-align: center;
-    
-
 }
 
 .board {
-    display: inline;
+    display: flex;
 }
 
 #playerHand {
-    float: right;
+    
+    order: 1;
     color: #A76B09;
     width: 500px;
-    margin: auto;
     font-size: 20px;
     font-weight: bold;
-    padding: 10px;
-
+    
 }
-
 #dealerHand {
-    float: left;
+    
+    order: 3;
+    color: #A76B09;
+    width: 500px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#playerScore{
+    
+
     color: #A76B09;
     width: 500px;
     margin: auto;
@@ -71,56 +81,116 @@ body {
     font-size: 20px;
     font-weight: bold;
     padding: 10px;
+    order: 1;
 
 }
-
-img {
+#dealerScore{
     
+
+    color: #A76B09;
+    width: 500px;
     margin: auto;
     text-align: center;
-    height: 150px;
-    width: 125px;
+    font-size: 20px;
+    font-weight: bold;
     padding: 10px;
-    
+    order: 3;
 }
-.deck img{
-    display: fixed;
-    border-radius: 20px;
-    margin-top: 200px;
-    height: 175px;
-    width: 125px;
+
+
+#deckContain {
+    
+    order: 2;
+    width: 500px;
+    margin: auto;
+    padding: 10px;
+}
+
+#deck {
+
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    height: 210px;
+    width: auto;
+    object-fit: scale-down;
+    padding: 10px;
+    border-radius: 11%;
+    order: 2;
 }
 
 #playerHand img {
+    
     animation-name: playerCard;
-    animation-duration: 2s;
+    animation-duration: 5s;
+    transition: 0.4s ease-out;
+    box-shadow: -1rem 0 3rem #272A31;
+    position: relative;
+    right: 0px;
+    height: 190px;
+    width: auto;
+    border-radius: 10px;
 }
 
 #dealerHand img {
+    
     animation-name: dealerCard;
-    animation-duration: 2s;
+    animation-duration: 5s;
+    transition: 0.4s ease-out;
+    box-shadow: -1rem 0 3rem #272A31;
+    position: relative;
+    left: 0px;
+    height: 190px;
+    width: auto;
+    border-radius: 10px;
+}
+
+/*Extra time, so I experimented with some animations I found on https://codepen.io/william-goldsworthy/pen/JzVajj */
+#dealerHand img:not(:first-child) {
+    margin-left: -100px;
+}
+#playerHand img:not(:last-child) {
+    margin-right: -100px;
+}
+#dealerHand img:hover {
+    transform: translateY(-20px);
+    transition: 0.4s ease-out;
+}
+#playerHand img:hover {
+    transform: translateY(-20px);
+    transition: 0.4s ease-out;
+}
+#playerHand img:hover ~ img {
+    position: relative;
+    right: -50px;
+    transition: 0.4s ease-out;
+}
+#dealerHand img:hover ~ img {
+    position: relative;
+    left: 50px;
+    transition: 0.4s ease-out;
 }
 /* Animation */
 /* Animation resources: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations */
 @keyframes playerCard {
     from {
-        margin-left: -700px;
-        margin-bottom: -350px;
+        margin-right: -600px;
+        
     }
     to {
-        margin-left: 0px;
-        margin-bottom: 0px;
+        margin-right: -100px;
+        
     }
 }
 
 @keyframes dealerCard {
     from {
-        margin-right: -700px;
-        margin-bottom: -350px;
+        margin-left: -600px;
+        
     }
     to {
-        margin-right: 0px;
-        margin-bottom: 0px;
+        margin-left: -100px;
+        
     }
 }
 
@@ -198,6 +268,7 @@ img {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 10px;
+    display: inline-flex;
 
 }
 .button:hover {
@@ -218,6 +289,7 @@ img {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 10px;
+    display: inline-flex;
     
 }
 

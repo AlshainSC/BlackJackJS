@@ -16,6 +16,7 @@
     Card Shuffle: https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array-in-javascript  
     Deck logic referenced from: https://www.programiz.com/javascript/examples/shuffle-card 
     Conceptual referencing: https://github.com/jacquelynmarcella/blackjack  
+    Card animations referenced from: https://codepen.io/william-goldsworthy/pen/JzVajj
     
  ======================================= */
 

@@ -70,20 +70,22 @@
     });
 
     $('#rules').on('click', function() {
-        console.log('works')
-        let rules = $("<h4>");
-        rules.html("The goal of the game is to reach 21 points.<br><br>\
-        If you go over 21, you lose!<br><br>\
-        If you and the dealer both go over 21, you both lose!<br><br>\
-        Pressing the deal button will deal one card to each player.<br><br>\
-        Pressing the hit button will deal another card to the player.<br><br>\
-        Pressing the stay button will end the player's turn.<br><br>\
-        Once both the player and the dealer have finished their turns,<br>\
+        //console.log('works')
+        //let rules = $("<h4>");
+        //rules.html("The goal of the game is to reach 21 points.<br><br>\
+        alert("1: If you go over 21, you lose!\
+        \n\n2: If you and the dealer both go over 21, you both lose!\
+        \n\n3: Pressing the deal button will deal one card to each player.\
+        \n\n4: Pressing the hit button will deal another card to the player.\
+        \n\n5: Pressing the stay button will end the player's turn.\
+        \n\n6: Once both the player and the dealer have finished their turns,\
         the winner is determined.")
-        $("#rules").after(rules)
-        setTimeout(function() {
+        //$("#rules").after(rules)
+        
+        
+        /*setTimeout(function() {
             $(rules).remove();
-        }, 30000);
+        }, 30000); */
     });
 
     $('#credits').on('click', function() {
@@ -162,7 +164,7 @@
 
     $("#playAgain").on('click', function() {
         let won = $("<h2>");
-        won.html("Dealer Wins: " + dealerWins + "&nbsp &nbsp &nbsp" + suitsSymbols + "&nbsp &nbsp &nbsp" + " Player Wins: " + playerWins)
+        won.html("Player Wins: " + playerWins + "&nbsp &nbsp &nbsp" + suitsSymbols + "&nbsp &nbsp &nbsp" + " Dealer Wins: " + dealerWins)
         $(".roundsWon h2").replaceWith(won);
         roundOver();
     });
