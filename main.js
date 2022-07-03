@@ -178,6 +178,8 @@
 
         if (target === false) {
             console.log(dHandVal)
+            $("#hit").removeClass("button").addClass("disabled");
+            $("#stay").removeClass("button").addClass("disabled");
             //$(".roundsWon h2").replaceWith("<h2>Dealer's turn!</h2>");
             dealer();
 
@@ -455,14 +457,15 @@
 
     //hit
     function hit() {
-        if (pHandVal < 21) {
-            let card = deck.pop();
-            playerHand.push(card);
-            pHandVal += card.value;
-            cardImg(card).prependTo("#playerCards");
-            game();
-        } else {
-            winConditions();
+
+        let card = deck.pop();
+        playerHand.push(card);
+        pHandVal += card.value;
+        cardImg(card).prependTo("#playerCards");
+        game();
+
+        if (pHandVal >= 21) {
+            stand();
         }
     }
 
@@ -470,6 +473,7 @@
     function stand() {
         playerStand = true;
         target = false;
+        
         game();
     }
 
