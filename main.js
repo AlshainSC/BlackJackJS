@@ -253,6 +253,7 @@
 //reset variables
 //potentially better as a separate function  <-- was made into a separate function and it is better this way.
         deck = [];
+        cards = [];
         playerHand = [];
         dealerHand = [];
         playerStand = false;
@@ -297,6 +298,7 @@
         playerWins = 0;
         dealerWins = 0;
         deck = [];
+        cards = [];
         playerHand = [];
         dealerHand = [];
         playerStand = false;
@@ -308,12 +310,17 @@
         $("#dealerCards p").remove();
         $("#playerCards img").remove();
         $("#dealerCards img").remove();
+        $(pVal).text("");
+        $(dVal).text("");
+
         
         $(".roundsWon h2").replaceWith("<h2>Game Over!</h2>");
         setTimeout(function() {
             $(".roundsWon h2").replaceWith("<h2>New Game?</h2>");
         }, 5000);
         $("roundsWon h3").replaceWith(winner);
+
+        setup();
     }
 
 //card logic
