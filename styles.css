@@ -1,4 +1,9 @@
 /* Headers */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .header, body {
+        width: 100%;
+    }
+}
 .header {
     display: block;
 }
@@ -10,22 +15,7 @@
     padding: 10px;
     display: inline-block;
 }
-#reset {
-    
-    font-family: 'Times New Roman', Times, serif;
-    background-color: #A76B09;
-    color: #272A31;
-    margin: auto;
-    text-align: center;
-    font-size: 15px;
-    font-weight: bold;
-    float: right;
-}
 
-#reset:hover {
-    background-color: #DDA74F;
-    color: #181619;
-}
 .header h2 {
     font-family: 'Times New Roman', Times, serif;
     color: #A76B09;
@@ -37,6 +27,14 @@
     border: #DDA74F solid 2px;
     border-radius: 10px;
     display: inline-block;
+    
+}
+.roundsWon h3 {
+    font-size: 50px;
+    font-weight: bold;
+    animation-name: color-changer;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
 }
 
 /* Body */
@@ -208,6 +206,14 @@ body {
         
     }
 }
+@keyframes color-changer {
+    from {
+        color: #DDA74F
+    }
+    to {
+        color: #A76B09
+    }
+}
 
 
 
@@ -307,7 +313,22 @@ body {
     display: inline-flex;
     
 }
+#reset {
+    
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #A76B09;
+    color: #272A31;
+    margin: auto;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    float: right;
+}
 
+#reset:hover {
+    background-color: #DDA74F;
+    color: #181619;
+}
 
 
 

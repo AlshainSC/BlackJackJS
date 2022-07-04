@@ -143,23 +143,27 @@
             $("#hit").removeClass("button").addClass("disabled");
             $("#stay").removeClass("button").addClass("disabled");
             //$(".roundsWon h2").replaceWith("<h2>Dealer's turn!</h2>");
-            dealer();
+            dealer();          
+        };
+        if (dealerStand === true) {
+            winConditions();
+        };
+       /* if (dHandVal > 21) {
+            winConditions();
+        };
+        if (pHandVal > 21) {
+            $("#hit").removeClass("button").addClass("disabled");
+            $("#stay").removeClass("button").addClass("disabled");
+            winConditions();
+        }; */
 
-        } else {
-            if (playerStand === true && dealerStand === true) {
-                
-                console.log('entered else if')
-                $(".roundsWon h3").replaceWith("Round Over");
-                winConditions();
-            }
-        }
         
     };
 
     function winConditions() {
         let win = $("<h3>")
         console.log("wincon loop has started")
-        console.log(pHandVal, dHandVal)
+        console.log(pHandVal, dHandVal) //switch statement maybe instead of if/else?
         if (pHandVal > 21 && dHandVal <= 21) {
             win.html(dealerWinMessage);
             dealerWins++;
@@ -465,14 +469,16 @@
             }, 1500);
         } else if (dHandVal > 21) {
             setTimeout(function() {
-                winConditions();
+                game();
             }, 1500);
-        } else {
+        } else if (dHandVal <= 21) {
+            console.log('enter dealer stand else if')
             setTimeout(function() {
+                target = true;
                 dealerStand = true;
                 turn.html("Dealer Stands!")
                 $(".roundsWon h3").replaceWith(turn);
-                winConditions();
+                game();
             }, 1500);
         }
 
