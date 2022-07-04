@@ -173,23 +173,23 @@ body {
 /* Animation */
 /* Animation resources: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations */
 @keyframes playerCard {
-    from {
-        margin-right: -600px;
+    0% {
+        left: 100%;
         
     }
-    to {
-        margin-right: -100px;
+    100% {
+        left: 0%;
         
     }
 }
 
 @keyframes dealerCard {
-    from {
-        margin-left: -600px;
+    0% {
+        left: -100%;
         
     }
-    to {
-        margin-left: -100px;
+    100% {
+        left: 0%;
         
     }
 }
