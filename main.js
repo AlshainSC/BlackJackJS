@@ -359,13 +359,13 @@
            point values: ace = 1 or 11, numbers = 2-10, face cards = 10 */
         for (let suit in suits) { // loop through suits
             for (let i = 1; i < 14; i++) { // for each suit, loop through numbers
-                let card = {
+                let card = { // create card object, assign properties
                     suit: suits[suit],
                     face: i,
                     value: i
                 }
                 
-                deck.push(card);
+                deck.push(card); //add each card object to deck array
             }
             
         };
@@ -389,12 +389,12 @@
 
         };
 
-        if (deck.length === 52) {
+        if (deck.length === 52) { //check if deck is full
             
             deckVal = true;
         }
 
-        if (deckVal === true) {
+        if (deckVal === true) { //shuffle deck if deck is full
             shuffleDeck();
         }
         
@@ -404,9 +404,9 @@
     function shuffleDeck() {
         for (let i = 0; i < deck.length; i++) {
             let random = Math.floor(Math.random() * deck.length);
-            let current = deck[i];
-            deck[i] = deck[random];
-            deck[random] = current;
+            let current = deck[i]; //current card
+            deck[i] = deck[random]; //replace current card with random card
+            deck[random] = current; //replace random card with current card
         };
         shuffled = true;
         
@@ -416,9 +416,9 @@
 
     //deal cards
     function playerDeal() {            
-                let pCard = deck.pop();
-                playerHand.push(pCard);
-                cardImg(pCard).appendTo("#playerCards");
+                let pCard = deck.pop(); //could use .shift() instead of .pop(), didn't figure it matters
+                playerHand.push(pCard); //add card to player hand
+                cardImg(pCard).appendTo("#playerCards"); //associate card with image
                 updateScores();
     };
 
@@ -430,7 +430,7 @@
     }
 
     function dealTimer(i) {
-            if (i % 2 === 0) {
+            if (i % 2 === 0) { //alternate player and dealer dealing
                 setTimeout(function() {
                     playerDeal();
                     
@@ -448,7 +448,7 @@
     function cardImg(card) {
         
         let cardImg = $("<img>");
-        cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
+        cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`); //assign image source based on suit and face (face being number or face card)
         return cardImg;
     }
 
@@ -457,10 +457,10 @@
 
         let card = deck.pop();
         playerHand.push(card);
-        cardImg(card).prependTo("#playerCards");
+        cardImg(card).prependTo("#playerCards"); //prepend because of player hand orientation
         pHandVal += card.value;
 
-        if (pHandVal > 21) {
+        if (pHandVal > 21) { //automatic fail condition
             stand();
         }
         updateScores();
@@ -469,7 +469,7 @@
     //stand
     function stand() {
         playerStand = true;
-        target = false;
+        target = false; //set target to dealer
         
         game();
     }
@@ -480,7 +480,8 @@
         let turn = $("<h3>");
 
         if (dHandVal < 17 && pHandVal <= 21) {
-            //timeout functions idea from 
+            //unsure if timeout is the best way to do this
+            //but it works
             setTimeout(function() {
                 dealerDeal();
                 turn.html("Dealer Hits!")
@@ -507,7 +508,7 @@
 
 
 
-    //yeah I know
+    //Might be the best movie ever made
         let buffer = [];
         let code = ['v','e','g','a','s']
     $(document).on('keydown', function(e) {
@@ -535,7 +536,7 @@
         buffer = buffer.join('');
         code = code.join('');
         if (buffer === code) {
-            window.location.replace("https://youtu.be/CEeqCbEFIJw");
+            window.location.replace("https://youtu.be/CEeqCbEFIJw"); //tried to do this as an alert popup, found out that doesn't work
         } else {
             buffer = [];
             code = ['v','e','g','a','s'];

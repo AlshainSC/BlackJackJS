@@ -204,6 +204,7 @@ body {
         transform: rotate(180deg); 
     }
 }
+/* draw the eye to notifications */
 @keyframes color-changer {
     from {
         color: #DDA74F
