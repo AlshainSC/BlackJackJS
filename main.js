@@ -36,6 +36,7 @@
 //setup function
     function setup() {
         createDeck();
+        console.log('Welcome to my Blackjack game!');
     }
 
 //menu function
@@ -138,7 +139,6 @@
     function game() {
         updateScores();
         if (target === false && dealerStand === false) {
-            console.log(dHandVal)
             $("#hit").removeClass("button").addClass("disabled");
             $("#stay").removeClass("button").addClass("disabled");
             //$(".roundsWon h2").replaceWith("<h2>Dealer's turn!</h2>");
@@ -161,8 +161,7 @@
 
     function winConditions() {
         let win = $("<h3>")
-        console.log("wincon loop has started")
-        console.log(pHandVal, dHandVal) //switch statement maybe instead of if/else?
+
 
         if (dHandVal === 21){ //dealer blackjack
             if (pHandVal === 21) { //dealer and player both have blackjack
@@ -440,9 +439,6 @@
                 }, i * 500);
                 
         };
-        
-        console.log(playerHand.length)
-        console.log(dealerHand.length)
     }
     
     function cardImg(card) {
@@ -505,6 +501,9 @@
 
     };
 
+
+
+    //yeah I know
         let buffer = [];
         let code = ['v','e','g','a','s']
     $(document).on('keydown', function(e) {
@@ -512,33 +511,25 @@
         switch (e.key) {
             case 'v':
                 buffer.push('v')
-                console.log(buffer)
                 break;
             case 'e':
                 buffer.push('e')
-                console.log(buffer)
                 break;
             case 'g':
                 buffer.push('g')
-                console.log(buffer)
                 break;
             case 'a':
                 buffer.push('a')
-                console.log(buffer)
                 break;
             case 's':
                 buffer.push('s')
-                console.log(buffer)
                 break;
         }
     });
 
-    function egg() {
-        console.log('egg start');
-        
+    function egg() {       
         buffer = buffer.join('');
         code = code.join('');
-        console.log(buffer,code);
         if (buffer === code) {
             window.location.replace("https://youtu.be/CEeqCbEFIJw");
         } else {
