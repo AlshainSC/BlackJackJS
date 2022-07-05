@@ -133,10 +133,6 @@
         roundOver();
     });
 
-    $("#reset").on('click', function() {
-        gameOver();
-    });
-
 //game function
     function game() {
         updateScores();
@@ -342,64 +338,6 @@
 
         setup();
     }
-
-//game over function
-    function gameOver() {
-        let winner = $("<h3>");
-        if (playerWins > dealerWins) {
-            winner.html("Game Over!<br>Player Wins!");
-            $(".roundsWon h3").replaceWith(winner);
-        } else if(playerWins < dealerWins) {
-            winner.html("Game Over!<br>Dealer Wins!");
-            $(".roundsWon h3").replaceWith(winner);
-        } else {
-            winner.html("Game Over!<br>It's a tie!");
-            $(".roundsWon h3").replaceWith(winner);
-        }
-
-        //reset buttons
-        $("#hit").removeClass("button").addClass("disabled");
-        $("#stay").removeClass("button").addClass("disabled");
-        $("#deal").removeClass("button").addClass("disabled");
-        $("#playAgain").addClass("disabled").removeClass("button");
-        $("#newGame").removeClass("disabled").addClass("button");
-
-        //reset variables
-        playerScore = 0;
-        dealerScore = 0;
-        playerWins = 0;
-        dealerWins = 0;
-        deck = [];
-        dealt = false;
-        shuffled = false;
-        deckVal = false;
-        i = 0;
-        cards = [];
-        playerHand = [];
-        dealerHand = [];
-        playerStand = false;
-        dealerStand = false;
-        pHandVal = 0;
-        dHandVal = 0;
-        target = true;
-        $("#playerCards p").remove();
-        $("#dealerCards p").remove();
-        $("#playerCards img").remove();
-        $("#dealerCards img").remove(); 
-        $(pVal).text("");
-        $(dVal).text("");
-
-        let won = $("<h2>");
-        won.html("Player Wins: " + playerWins + "&nbsp &nbsp &nbsp" + suitsSymbols + "&nbsp &nbsp &nbsp" + " Dealer Wins: " + dealerWins)
-        $(".roundsWon h2").replaceWith("<h2>Game Over!</h2>");
-        setTimeout(function() {
-            $(".roundsWon h2").replaceWith(won);
-        }, 1000);
-        $("roundsWon h3").replaceWith(winner);
-
-        setup();
-    }
-
 //card logic
 
     //create deck
@@ -484,6 +422,9 @@
             cardImg(dCard).prependTo("#dealerCards");
             if (dCard.value === 11) {
                 dHasAce = true;
+            }
+            if (dHasAce) {
+                checkAces();
             }
             updateScores();
     }
