@@ -312,6 +312,7 @@
         $("#hit").removeClass("button").addClass("disabled");
         $("#stay").removeClass("button").addClass("disabled");
         $("#deal").removeClass("button").addClass("disabled");
+        $("#playAgain").addClass("disabled").removeClass("button");
         $("#newGame").removeClass("disabled").addClass("button");
 
         //reset variables
