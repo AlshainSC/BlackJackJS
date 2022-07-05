@@ -20,6 +20,7 @@
     let playerStand = false;
     let playerBustMessage = "Oh no you're bust!";
     let playerWinMessage = "You win!";
+    let pHasAce = false;
 
     //dealer
     let dealerHand = [];
@@ -30,6 +31,7 @@
     let dealerStand = false;
     let dealerBustMessage = "Dealer is bust!";
     let dealerWinMessage = "Dealer wins!";
+    let dHasAce = false;
 
 
 
@@ -138,6 +140,7 @@
 //game function
     function game() {
         updateScores();
+        console.log(pHasAce)
         if (target === false && dealerStand === false) {
             $("#hit").removeClass("button").addClass("disabled");
             $("#stay").removeClass("button").addClass("disabled");
@@ -145,8 +148,16 @@
             dealer();          
         };
         if (dealerStand === true) {
+            updateScores();
             winConditions();
         };
+
+        if (pHasAce === true) {
+            checkAces();
+        }
+        if (dHasAce === true) {
+            checkAces();
+        }
        /* if (dHandVal > 21) {
             winConditions();
         };
@@ -161,6 +172,7 @@
 
     function winConditions() {
         let win = $("<h3>")
+        
 
 
         if (dHandVal === 21){ //dealer blackjack
@@ -211,38 +223,75 @@
 
     };
 
+    function checkAces() {
+        console.log("checkAces");
+        console.log(pHandVal, dHandVal);
+        for (let i = 0; i < playerHand.length; i++) {
+            if (playerHand[i].value === 11 && pHandVal > 21) {
+                pHandVal -= 10;
+                playerHand[i].value = 1;
+                pHasAce = false;
+            }
+            updateScores();
+        }
+        for (let i = 0; i < dealerHand.length; i++) {
+            if (dealerHand[i].value === 11 && dHandVal > 21) {
+                dHandVal -= 10;
+                dealerHand[i].value = 1;
+                dHasAce = false;
+            }
+            updateScores();
+        }
+    }
+
     function updateScores() {
         //referencing https://github.com/jacquelynmarcella/blackjack/blob/master/js/main.js
         //line 69 && associated logic
         //Was having a difficult time getting scores to update on button press, without adding multiplicatively.
         //Initial attempts at logic remain commented out below.
+        //Just as documentation of my uh....  process. 
         
-        
+        //attempt 3
         pHandVal = 0;
         dHandVal = 0;
-        
+
         for (let i = 0; i < playerHand.length; i++) {
+            pHandVal += playerHand[i].value;
+            $(pVal).text("Current Hand Value: " + pHandVal);
+        }
+        for (let i = 0; i < dealerHand.length; i++) {
+            dHandVal += dealerHand[i].value;
+            $(dVal).text("Current Hand Value: " + dHandVal);
+        }
+        
+        //attempt #2
+        /*for (let i = 0; i < playerHand.length; i++) {
             if (playerHand[i].value === 1 ) {
+                pHasAce = true;
                 if (pHandVal + 11 > 21) {
                     playerHand[i].value = 1;
                 } else {
                     playerHand[i].value = 11;
                 }
             }
+            
             pHandVal += playerHand[i].value;
             $(pVal).text("Current Hand Value: " + pHandVal);
         };
         for (let i = 0; i < dealerHand.length; i++) {
             if (dealerHand[i].value === 1 ) {
+                dHasAce = true;
                 if (dHandVal + 11 > 21) {
                     dealerHand[i].value = 1;
                 } else {
                     dealerHand[i].value = 11;
                 }
-            }
+            } 
             dHandVal += dealerHand[i].value;
             $(dVal).text("Current Hand Value: " + dHandVal);
-        };
+        }; */
+
+        //attempt #1
         /*pHandVal = 0;
         dHandVal = 0;
 
@@ -375,6 +424,9 @@
 //check face cards and assign appropriate point value
 //assign face cards with appropriate names: Jack, Queen, King, Ace(?)
             switch (deck[card].value) {
+                case 1:
+                    deck[card].value = 11;
+                    break;
                 case 11:
                     deck[card].face = "JACK";
                     deck[card].value = 10;
@@ -417,16 +469,22 @@
 
     //deal cards
     function playerDeal() {            
-                let pCard = deck.pop(); //could use .shift() instead of .pop(), didn't figure it matters
-                playerHand.push(pCard); //add card to player hand
-                cardImg(pCard).appendTo("#playerCards"); //associate card with image
-                updateScores();
+            let pCard = deck.pop(); //could use .shift() instead of .pop(), didn't figure it matters
+            playerHand.push(pCard); //add card to player hand
+            cardImg(pCard).appendTo("#playerCards"); //associate card with image
+            if (pCard.value === 11) {
+                pHasAce = true;
+            }
+            updateScores();
     };
 
     function dealerDeal() {   
             let dCard = deck.pop();
             dealerHand.push(dCard);   
             cardImg(dCard).prependTo("#dealerCards");
+            if (dCard.value === 11) {
+                dHasAce = true;
+            }
             updateScores();
     }
 
@@ -456,15 +514,12 @@
     //hit
     function hit() {
 
-        let card = deck.pop();
-        playerHand.push(card);
-        cardImg(card).prependTo("#playerCards"); //prepend because of player hand orientation
-        pHandVal += card.value;
+        playerDeal();
+        game();
 
-        if (pHandVal > 21) { //automatic fail condition
+        if (pHandVal > 21) {
             stand();
         }
-        updateScores();
     }
 
     //stand
