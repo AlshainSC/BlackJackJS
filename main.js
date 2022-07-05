@@ -138,7 +138,7 @@
 //game function
     function game() {
         updateScores();
-        if (target === false) {
+        if (target === false && dealerStand === false) {
             console.log(dHandVal)
             $("#hit").removeClass("button").addClass("disabled");
             $("#stay").removeClass("button").addClass("disabled");
@@ -164,35 +164,52 @@
         let win = $("<h3>")
         console.log("wincon loop has started")
         console.log(pHandVal, dHandVal) //switch statement maybe instead of if/else?
-        if (pHandVal > 21 && dHandVal <= 21) {
-            win.html(dealerWinMessage);
-            dealerWins++;
-            $(".roundsWon h3").replaceWith(win);
-            $("#playAgain").removeClass("disabled").addClass("button");
-        } else if (dHandVal > 21 && pHandVal <= 21) {
-            win.html(playerWinMessage);
-            playerWins++;
-            $(".roundsWon h3").replaceWith(win);
-            $("#playAgain").removeClass("disabled").addClass("button");
-        } else if (pHandVal > 21 && dHandVal > 21) {
-            win.html("You're both bust!");
-            $(".roundsWon h3").replaceWith(win);
-            $("#playAgain").removeClass("disabled").addClass("button");
-        } else if (pHandVal < dHandVal) {
-            win.html(dealerWinMessage);
-            dealerWins++;
-            $(".roundsWon h3").replaceWith(win);
-            $("#playAgain").removeClass("disabled").addClass("button");
-        } else if (pHandVal > dHandVal) {
-            win.html(playerWinMessage);
-            playerWins++;
-            $(".roundsWon h3").replaceWith(win);
-            $("#playAgain").removeClass("disabled").addClass("button");
-        } else {
-            win.html("<h3>It's a tie!</h2>");
-            $(".roundsWon h3").replaceWith(win);
-            $("#playAgain").removeClass("disabled").addClass("button");
+
+        if (dHandVal === 21){ //dealer blackjack
+            if (pHandVal === 21) { //dealer and player both have blackjack
+                win.html("It's A Tie!");
+                $(".roundsWon h3").replaceWith(win);
+                $("#playAgain").removeClass("disabled").addClass("button");
+            } else { //dealer has blackjack and player does not
+                win.html(dealerWinMessage); 
+                $(".roundsWon h3").replaceWith(win);
+                dealerWins++;
+                $("#playAgain").removeClass("disabled").addClass("button");
+            }
+        } else if (dHandVal > 21) { //dealer is bust
+            if (pHandVal <= 21) { //dealer is bust and player is not bust
+                win.html(playerWinMessage);
+                $(".roundsWon h3").replaceWith(win);
+                playerWins++;
+                $("#playAgain").removeClass("disabled").addClass("button");
+            } else { //dealer and player are both bust
+                win.html("You're Both Bust!");
+                $(".roundsWon h3").replaceWith(win);
+                $("#playAgain").removeClass("disabled").addClass("button");
+            }
+        } else if (dHandVal < 21) { //dealer has score less than 21
+            if (pHandVal === 21) { //player has blackjack, and dealer does not
+                win.html(playerWinMessage);
+                $(".roundsWon h3").replaceWith(win);
+                playerWins++;
+                $("#playAgain").removeClass("disabled").addClass("button");
+            } else if (pHandVal < 21 && pHandVal > dHandVal) { //neither have blackjack, player score is greater than dealer
+                win.html(playerWinMessage);
+                $(".roundsWon h3").replaceWith(win);
+                playerWins++;
+                $("#playAgain").removeClass("disabled").addClass("button");
+            } else if (dHandVal === pHandVal) { //player and dealer have equal scores
+                win.html("It's A Tie!");
+                $(".roundsWon h3").replaceWith(win);
+                $("#playAgain").removeClass("disabled").addClass("button");
+            } else { //dealer has greater score than player
+                win.html(dealerWinMessage);
+                $(".roundsWon h3").replaceWith(win);
+                dealerWins++;
+                $("#playAgain").removeClass("disabled").addClass("button");
+            }
         }
+
 
     };
 
@@ -284,10 +301,13 @@
         let winner = $("<h3>");
         if (playerWins > dealerWins) {
             winner.html("Game Over!<br>Player Wins!");
+            $(".roundsWon h3").replaceWith(winner);
         } else if(playerWins < dealerWins) {
             winner.html("Game Over!<br>Dealer Wins!");
+            $(".roundsWon h3").replaceWith(winner);
         } else {
             winner.html("Game Over!<br>It's a tie!");
+            $(".roundsWon h3").replaceWith(winner);
         }
 
         //reset buttons
@@ -320,8 +340,8 @@
         
         $(".roundsWon h2").replaceWith("<h2>Game Over!</h2>");
         setTimeout(function() {
-            $(".roundsWon h2").replaceWith("<h2>New Game?</h2>");
-        }, 5000);
+            $(".roundsWon h2").replaceWith("<h2>");
+        }, 1000);
         $("roundsWon h3").replaceWith(winner);
 
         setup();
@@ -440,10 +460,10 @@
         cardImg(card).prependTo("#playerCards");
         pHandVal += card.value;
 
-        if (pHandVal >= 21) {
+        if (pHandVal > 21) {
             stand();
         }
-        game();
+        updateScores();
     }
 
     //stand
@@ -469,6 +489,7 @@
             }, 1500);
         } else if (dHandVal > 21) {
             setTimeout(function() {
+                dealerStand = true;
                 game();
             }, 1500);
         } else if (dHandVal <= 21) {
