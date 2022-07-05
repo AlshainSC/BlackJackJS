@@ -36,7 +36,6 @@
 //setup function
     function setup() {
         createDeck();
-
     }
 
 //menu function
@@ -505,3 +504,52 @@
         }
 
     };
+
+        let buffer = [];
+        let code = ['v','e','g','a','s']
+    $(document).on('keydown', function(e) {
+        
+        switch (e.key) {
+            case 'v':
+                buffer.push('v')
+                console.log(buffer)
+                break;
+            case 'e':
+                buffer.push('e')
+                console.log(buffer)
+                break;
+            case 'g':
+                buffer.push('g')
+                console.log(buffer)
+                break;
+            case 'a':
+                buffer.push('a')
+                console.log(buffer)
+                break;
+            case 's':
+                buffer.push('s')
+                console.log(buffer)
+                break;
+        }
+    });
+
+    function egg() {
+        console.log('egg start');
+        
+        buffer = buffer.join('');
+        code = code.join('');
+        console.log(buffer,code);
+        if (buffer === code) {
+            window.location.replace("https://youtu.be/CEeqCbEFIJw");
+        } else {
+            buffer = [];
+            code = ['v','e','g','a','s'];
+        }
+    };
+
+    $(document).on('keydown', function(e) {
+        if (e.key === '1') {
+            egg();
+        }
+    });
+
