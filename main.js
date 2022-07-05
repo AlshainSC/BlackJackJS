@@ -337,10 +337,11 @@
         $(pVal).text("");
         $(dVal).text("");
 
-        
+        let won = $("<h2>");
+        won.html("Player Wins: " + playerWins + "&nbsp &nbsp &nbsp" + suitsSymbols + "&nbsp &nbsp &nbsp" + " Dealer Wins: " + dealerWins)
         $(".roundsWon h2").replaceWith("<h2>Game Over!</h2>");
         setTimeout(function() {
-            $(".roundsWon h2").replaceWith("<h2>");
+            $(".roundsWon h2").replaceWith(won);
         }, 1000);
         $("roundsWon h3").replaceWith(winner);
 

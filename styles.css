@@ -2,6 +2,7 @@
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     .header, body {
         width: 100%;
+        height: 100%;
     }
 }
 .header {
@@ -10,23 +11,19 @@
 .header h1 {
     font-family: 'Times New Roman', Times, serif;
     color: #A76B09;
-    margin: auto;
-    text-align: center;
-    padding: 10px;
-    display: inline-block;
+    margin: 0px;
+    text-align: left;
+    padding: 5px;
+    display: block;
 }
 
 .header h2 {
     font-family: 'Times New Roman', Times, serif;
     color: #A76B09;
-    margin: auto;
-    text-align: center;
+    margin: 0px;
     font-size: 20px;
     font-weight: bold;
-    padding: 10px;
-    border: #DDA74F solid 2px;
-    border-radius: 10px;
-    display: inline-block;
+    padding: 0px;
     
 }
 .roundsWon h3 {
@@ -35,6 +32,7 @@
     animation-name: color-changer;
     animation-duration: 4s;
     animation-fill-mode: forwards;
+    margin-right: 0px;
 }
 
 /* Body */
@@ -55,18 +53,20 @@ body {
     
     order: 1;
     color: #A76B09;
-    width: 500px;
+    position: relative;
     font-size: 20px;
     font-weight: bold;
+    top: -275px;
     
 }
 #dealerHand {
     
     order: 3;
     color: #A76B09;
-    width: 500px;
+    position: relative;
     font-size: 20px;
     font-weight: bold;
+    top: -275px
 }
 
 #playerScore{
@@ -187,28 +187,27 @@ body {
 /* Animation resources: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations */
 @keyframes playerCard {
     0% {
-        left: 100%;
-        
+        transform: translate(300px, 275px); 
     }
     100% {
-        left: 0%;
-        
+        transform: translate(0px, 0px);
+        transform: rotate(180deg); 
     }
 }
 
 @keyframes dealerCard {
     0% {
-        left: -100%;
-        
+        transform: translate(-300px, 275px);
     }
     100% {
-        left: 0%;
-        
+        transform: translate(0px, 0px);
+        transform: rotate(180deg); 
     }
 }
 @keyframes color-changer {
     from {
         color: #DDA74F
+
     }
     to {
         color: #A76B09
