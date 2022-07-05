@@ -371,24 +371,24 @@
             
         };
 
-        for (let card in deck) { 
+       for (let card in deck) { 
 //check face cards and assign appropriate point value
 //assign face cards with appropriate names: Jack, Queen, King, Ace(?)
-            
-            if (deck[card].value === 11) {
-                deck[card].face = 'JACK' //jack
-                deck[card].value = 10;
-            }
-            if (deck[card].value === 12) {
-                deck[card].face = 'QUEEN' //queen
-                deck[card].value = 10;
-            }
-            if (deck[card].value === 13) {
-                deck[card].face = 'KING' //king
-                deck[card].value = 10;
-            }
-
-        };
+            switch (deck[card].value) {
+                case 11:
+                    deck[card].face = "JACK";
+                    deck[card].value = 10;
+                    break;
+                case 12:
+                    deck[card].face = "QUEEN";
+                    deck[card].value = 10;
+                    break;
+                case 13:
+                    deck[card].face = "KING";
+                    deck[card].value = 10;
+                    break;
+            };
+        }; 
 
         if (deck.length === 52) { //check if deck is full
             
