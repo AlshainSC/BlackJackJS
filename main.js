@@ -320,6 +320,10 @@
         playerWins = 0;
         dealerWins = 0;
         deck = [];
+        dealt = false;
+        shuffled = false;
+        deckVal = false;
+        i = 0;
         cards = [];
         playerHand = [];
         dealerHand = [];
@@ -331,7 +335,7 @@
         $("#playerCards p").remove();
         $("#dealerCards p").remove();
         $("#playerCards img").remove();
-        $("#dealerCards img").remove();
+        $("#dealerCards img").remove(); 
         $(pVal).text("");
         $(dVal).text("");
 
