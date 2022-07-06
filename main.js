@@ -26,6 +26,7 @@
     let dealerHand = [];
     let dealerScore = 0; // round score dealer
     let dHandVal = 0; // current hand value dealer
+    let dHandValVis = 0;
     let dVal = $('#dScore');
     let dealerWins = 0;
     let dealerStand = false;
@@ -116,6 +117,7 @@
         $("#stay").removeClass("button").addClass("disabled");
         turn.html("Dealer's Turn!");
         $(".roundsWon h3").replaceWith(turn);
+        flipCard(dealerHand[0]);
         stand();
         
     
@@ -135,8 +137,8 @@
 
 //game function
     function game() {
-        updateScores();
-        console.log(pHasAce)
+        
+        
         if (target === false && dealerStand === false) {
             $("#hit").removeClass("button").addClass("disabled");
             $("#stay").removeClass("button").addClass("disabled");
@@ -168,9 +170,6 @@
 
     function winConditions() {
         let win = $("<h3>")
-        
-
-
         if (dHandVal === 21){ //dealer blackjack
             if (pHandVal === 21) { //dealer and player both have blackjack
                 win.html("It's A Tie!");
@@ -240,6 +239,13 @@
         }
     }
 
+    function flipCard(card) {
+        
+        $(card).addClass("flipped");
+        cardImg(card);
+        updateScores();
+    }
+
     function updateScores() {
         //referencing https://github.com/jacquelynmarcella/blackjack/blob/master/js/main.js
         //line 69 && associated logic
@@ -255,10 +261,19 @@
             pHandVal += playerHand[i].value;
             $(pVal).text("Current Hand Value: " + pHandVal);
         }
-        for (let i = 0; i < dealerHand.length; i++) {
-            dHandVal += dealerHand[i].value;
+        if (!$(dealerHand[0]).hasClass("flipped")) {
+            
+            for (let i = 1; i < dealerHand.length; i++) {
+                dHandVal += dealerHand[i].value;
+            }
+            $(dVal).text("Current Hand Value: " + dHandVal);
+        } else {
+            for (let i = 0; i < dealerHand.length; i++) {
+                dHandVal += dealerHand[i].value;  
+            }
             $(dVal).text("Current Hand Value: " + dHandVal);
         }
+        
         
         //attempt #2
         /*for (let i = 0; i < playerHand.length; i++) {
@@ -418,8 +433,10 @@
 
     function dealerDeal() {   
             let dCard = deck.pop();
+            
             dealerHand.push(dCard);   
             cardImg(dCard).prependTo("#dealerCards");
+            
             if (dCard.value === 11) {
                 dHasAce = true;
             }
@@ -446,10 +463,19 @@
     }
     
     function cardImg(card) {
-        
-        let cardImg = $("<img>");
-        cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`); //assign image source based on suit and face (face being number or face card)
-        return cardImg;
+        if (card === dealerHand[0] && !$(card).hasClass('flipped')) {
+            let flippedCard = $("<img>");
+            flippedCard.attr("src", "assets/cardBack.jpeg");
+            return flippedCard;
+        } else if (card === dealerHand[0] && $(card).hasClass('flipped')) {
+            let flippedCard = $("<img>");
+            flippedCard.attr("src", `assets/${card.suit}-${card.face}.svg`);
+            return flippedCard;
+        } else {
+            let cardImg = $("<img>");
+            cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`); //assign image source based on suit and face (face being number or face card)
+            return cardImg;
+        }
     }
 
     //hit
@@ -467,15 +493,12 @@
     function stand() {
         playerStand = true;
         target = false; //set target to dealer
-        
         game();
     }
 
 //dealer logic
     function dealer() {
-        
         let turn = $("<h3>");
-
         if (dHandVal < 17 && pHandVal <= 21) {
             //unsure if timeout is the best way to do this
             //but it works
