@@ -13,7 +13,6 @@
 
     //player
     let playerHand = [];
-    let playerScore = 0; // round score player
     let pHandVal = 0; // current hand value player
     let pVal = $('#pScore');
     let playerWins = 0;
@@ -25,7 +24,6 @@
 
     //dealer
     let dealerHand = [];
-    let dealerScore = 0; // round score dealer
     let dHandVal = 0; // current hand value dealer
     let dHandValVis = 0;
     let dVal = $('#dScore');
@@ -48,12 +46,18 @@
 
     //button functions
     $('#newGame').on('click', function() {
+        playerWins = 0;
+        dealerWins = 0;
+        let won = $("<h2>");
+        won.html("Player Wins: " + playerWins + "&nbsp &nbsp &nbsp" + suitsSymbols + "&nbsp &nbsp &nbsp" + " Dealer Wins: " + dealerWins)
+        $(".roundsWon h2").replaceWith(won);
         let game = $("<h3>")
         //change menu item based on choice
         $("#deal").removeClass("disabled").addClass("button");
         $("#newGame").removeClass("button").addClass("disabled");
         game.html("New Game!  Deal two cards to start!");
         $(".roundsWon h3").replaceWith(game);
+
         
         //start game
         setup();
@@ -91,7 +95,7 @@
             turn.html("Your Turn!");
             $(".roundsWon h3").replaceWith(turn);
         };
-        
+        $("#newGame").removeClass("button").addClass("disabled");
         game();
     });
 
@@ -206,7 +210,7 @@
             }
         }
 
-
+        $("#newGame").removeClass("disabled").addClass("button");
     };
 
     function checkAces() {
