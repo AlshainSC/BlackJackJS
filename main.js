@@ -21,11 +21,13 @@
     let playerBustMessage = "Oh no you're bust!";
     let playerWinMessage = "You win!";
     let pHasAce = false;
+    
 
     //dealer
     let dealerHand = [];
     let dealerScore = 0; // round score dealer
     let dHandVal = 0; // current hand value dealer
+    let dHandValVis = 0;
     let dVal = $('#dScore');
     let dealerWins = 0;
     let dealerStand = false;
@@ -103,6 +105,8 @@
             turn.html("Your Turn!");
             $(".roundsWon h3").replaceWith(turn);
         };
+        
+        game();
     });
 
     $("#hit").on('click', function() {
@@ -116,6 +120,7 @@
         $("#stay").removeClass("button").addClass("disabled");
         turn.html("Dealer's Turn!");
         $(".roundsWon h3").replaceWith(turn);
+        flipCard();
         stand();
     });
 
@@ -135,6 +140,7 @@
     function game() {
         
         updateScores();
+        
         if (target === false && dealerStand === false) {
             $("#hit").removeClass("button").addClass("disabled");
             $("#stay").removeClass("button").addClass("disabled");
@@ -161,9 +167,6 @@
 
     function winConditions() {
         let win = $("<h3>")
-        
-
-
         if (dHandVal === 21){ //dealer blackjack
             if (pHandVal === 21) { //dealer and player both have blackjack
                 win.html("It's A Tie!");
@@ -233,6 +236,12 @@
         }
     }
 
+    function flipCard() {
+        $("#dealerCards img").last().removeClass("flipped").addClass("unflipped");
+        $("#dealerCards .unflipped ").attr("src", `assets/${dealerHand[0].suit}-${dealerHand[0].value}.svg`);
+        updateScores();
+    }
+
     function updateScores() {
         //referencing https://github.com/jacquelynmarcella/blackjack/blob/master/js/main.js
         //line 69 && associated logic
@@ -259,10 +268,19 @@
             pHandVal += playerHand[i].value;
             $(pVal).text("Current Hand Value: " + pHandVal);
         }
-        for (let i = 0; i < dealerHand.length; i++) {
-            dHandVal += dealerHand[i].value;
+        if ($("#dealerCards img").hasClass("flipped")) {
+            
+            for (let i = 1; i < dealerHand.length; i++) {
+                dHandVal += dealerHand[i].value;
+            }
+            $(dVal).text("Current Hand Value: " + dHandVal);
+        } else {
+            for (let i = 0; i < dealerHand.length; i++) {
+                dHandVal += dealerHand[i].value;  
+            }
             $(dVal).text("Current Hand Value: " + dHandVal);
         } */
+        
         
         //attempt #2
         /*for (let i = 0; i < playerHand.length; i++) {
@@ -409,19 +427,33 @@
     //deal cards
     function playerDeal() {            
             let pCard = deck.pop(); //could use .shift() instead of .pop(), didn't figure it matters
+            let cardImg = $('<img>');
+            let pIndex = playerHand.length;
             playerHand.push(pCard); //add card to player hand
-            cardImg(pCard).appendTo("#playerCards"); //associate card with image
+            cardImg.attr("src", `assets/${playerHand[pIndex].suit}-${playerHand[pIndex].face}.svg`);
+            cardImg.prependTo("#playerCards");
             if (pCard.value === 11) {
                 pHasAce = true;
             }
             pHandVal += pCard.value; //add card value to player hand value 
+            
+            updateScores();
     };
 
     function dealerDeal() {
                
             let dCard = deck.pop();
-            dealerHand.push(dCard);   
-            cardImg(dCard).prependTo("#dealerCards");
+            let cardImg = $("<img>");
+            let dIndex = dealerHand.length;
+            dealerHand.push(dCard);
+
+            if (dIndex === 0) {
+                cardImg.attr("class", "flipped");
+                cardImg.attr("src", "assets/cardBack.jpeg");
+            } else {
+                cardImg.attr("src", `assets/${dealerHand[dIndex].suit}-${dealerHand[dIndex].face}.svg`);
+            }
+            cardImg.prependTo("#dealerCards");
             if (dCard.value === 11) {
                 dHasAce = true;
             }
@@ -429,6 +461,8 @@
                 checkAces();
             }
             dHandVal += dCard.value;
+            
+            updateScores();
     }
 
     function dealTimer(i) {
@@ -457,6 +491,39 @@
         cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`); //assign image source based on suit and face (face being number or face card)
         return cardImg; */
     }
+    /*function cardImg() {
+        for (let i = 0; i < dealerHand.length; i++) {
+            let card = dealerHand[i];
+            console.log(card);
+            
+            let cardImg = $("<img>");
+            
+            if (i === 0) {
+                $("#dealerCards img").addClass("flipped");
+                cardImg.attr("src", "assets/cardBack.jpeg");
+            } else {
+                cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
+            }
+            cardImg.prependTo("#dealerCards");
+        };
+        for (let i = 0; i < playerHand.length; i++) {
+            let card = playerHand[i];
+
+            let cardImg = $("<img>");
+            
+            cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
+            cardImg.prependTo("#playerCards");
+        } 
+        if (i === 0) {
+            let flippedCard = $("<img>");
+            flippedCard.attr("src", "assets/cardBack.jpeg");
+            return flippedCard;
+        } else {
+            let cardImg = $("<img>");
+            cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
+            return cardImg;
+        }
+    }*/
 
     //hit
     function hit() {
@@ -475,13 +542,13 @@
         target = false; //set target to dealer
         
         dealer();
+        game();
     }
 
 //dealer logic
     function dealer() {
         updateScores();
         let turn = $("<h3>");
-
         if (dHandVal < 17 && pHandVal <= 21) {
             //unsure if timeout is the best way to do this
             //but it works
