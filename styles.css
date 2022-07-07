@@ -122,9 +122,9 @@ body {
     order: 2;
 }
 
-.flipped img {
+#dealerHand .unflipped {
     animation-name: flippedCard;
-    animation-duration: 0.5s;
+    animation-duration: 0.7s;
     transition: .4s ease-out;
     box-shadow: -1rem 0 3rem #272A31;
     position: relative;
@@ -224,7 +224,7 @@ body {
         transform: rotateY(0deg);
     }
     to {
-        transform: rotateY(180deg);
+        transform: rotateY(360deg);
     }
 }
 /* draw the eye to notifications */

@@ -21,6 +21,7 @@
     let playerBustMessage = "Oh no you're bust!";
     let playerWinMessage = "You win!";
     let pHasAce = false;
+    
 
     //dealer
     let dealerHand = [];
@@ -33,6 +34,7 @@
     let dealerBustMessage = "Dealer is bust!";
     let dealerWinMessage = "Dealer wins!";
     let dHasAce = false;
+    
 
 
 
@@ -103,7 +105,8 @@
             turn.html("Your Turn!");
             $(".roundsWon h3").replaceWith(turn);
         };
-    game();
+        
+        game();
     });
 
     $("#hit").on('click', function() {
@@ -117,7 +120,7 @@
         $("#stay").removeClass("button").addClass("disabled");
         turn.html("Dealer's Turn!");
         $(".roundsWon h3").replaceWith(turn);
-        flipCard(dealerHand[0]);
+        flipCard();
         stand();
         
     
@@ -239,10 +242,9 @@
         }
     }
 
-    function flipCard(card) {
-        
-        $(card).addClass("flipped");
-        cardImg(card);
+    function flipCard() {
+        $("#dealerCards img").last().removeClass("flipped").addClass("unflipped");
+        $("#dealerCards .unflipped ").attr("src", `assets/${dealerHand[0].suit}-${dealerHand[0].value}.svg`);
         updateScores();
     }
 
@@ -261,7 +263,7 @@
             pHandVal += playerHand[i].value;
             $(pVal).text("Current Hand Value: " + pHandVal);
         }
-        if (!$(dealerHand[0]).hasClass("flipped")) {
+        if ($("#dealerCards img").hasClass("flipped")) {
             
             for (let i = 1; i < dealerHand.length; i++) {
                 dHandVal += dealerHand[i].value;
@@ -423,26 +425,38 @@
     //deal cards
     function playerDeal() {            
             let pCard = deck.pop(); //could use .shift() instead of .pop(), didn't figure it matters
+            let cardImg = $('<img>');
+            let pIndex = playerHand.length;
             playerHand.push(pCard); //add card to player hand
-            cardImg(pCard).appendTo("#playerCards"); //associate card with image
+            cardImg.attr("src", `assets/${playerHand[pIndex].suit}-${playerHand[pIndex].face}.svg`);
+            cardImg.prependTo("#playerCards");
             if (pCard.value === 11) {
                 pHasAce = true;
             }
+            
             updateScores();
     };
 
     function dealerDeal() {   
             let dCard = deck.pop();
-            
-            dealerHand.push(dCard);   
-            cardImg(dCard).prependTo("#dealerCards");
-            
+            let cardImg = $("<img>");
+            let dIndex = dealerHand.length;
+            dealerHand.push(dCard);
+
+            if (dIndex === 0) {
+                cardImg.attr("class", "flipped");
+                cardImg.attr("src", "assets/cardBack.jpeg");
+            } else {
+                cardImg.attr("src", `assets/${dealerHand[dIndex].suit}-${dealerHand[dIndex].face}.svg`);
+            }
+            cardImg.prependTo("#dealerCards");
             if (dCard.value === 11) {
                 dHasAce = true;
             }
             if (dHasAce) {
                 checkAces();
             }
+            
             updateScores();
     }
 
@@ -462,21 +476,39 @@
         };
     }
     
-    function cardImg(card) {
-        if (card === dealerHand[0] && !$(card).hasClass('flipped')) {
+    /*function cardImg() {
+        for (let i = 0; i < dealerHand.length; i++) {
+            let card = dealerHand[i];
+            console.log(card);
+            
+            let cardImg = $("<img>");
+            
+            if (i === 0) {
+                $("#dealerCards img").addClass("flipped");
+                cardImg.attr("src", "assets/cardBack.jpeg");
+            } else {
+                cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
+            }
+            cardImg.prependTo("#dealerCards");
+        };
+        for (let i = 0; i < playerHand.length; i++) {
+            let card = playerHand[i];
+
+            let cardImg = $("<img>");
+            
+            cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
+            cardImg.prependTo("#playerCards");
+        } 
+        if (i === 0) {
             let flippedCard = $("<img>");
             flippedCard.attr("src", "assets/cardBack.jpeg");
             return flippedCard;
-        } else if (card === dealerHand[0] && $(card).hasClass('flipped')) {
-            let flippedCard = $("<img>");
-            flippedCard.attr("src", `assets/${card.suit}-${card.face}.svg`);
-            return flippedCard;
         } else {
             let cardImg = $("<img>");
-            cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`); //assign image source based on suit and face (face being number or face card)
+            cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`);
             return cardImg;
         }
-    }
+    }*/
 
     //hit
     function hit() {
