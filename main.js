@@ -66,10 +66,8 @@
         \n\n3: Pressing the deal button will deal two cards to each player.\
         \n\n4: Pressing the hit button will deal another card to the player.\
         \n\n5: Pressing the stay button will end the player's turn.\
-        \n\n6: Once both the player and the dealer have finished their turns,\
-        the winner is determined.\
-        \n\n7: The goal is to bring your hand's value as close to 21 as possible\
-        without going over.\
+        \n\n6: Once both the player and the dealer have finished their turns, the winner is determined.\
+        \n\n7: The goal is to bring your hand's value as close to 21 as possible without going over.\
         \n\nGood Luck and Have Fun!");
 
     });
