@@ -69,6 +69,8 @@ body {
     top: -275px
 }
 
+
+
 #playerScore{
     
 
@@ -119,6 +121,18 @@ body {
     border-radius: 12%;
     order: 2;
 }
+
+#dealerHand .unflipped {
+    animation-name: flippedCard;
+    animation-duration: 0.7s;
+    transition: .4s ease-out;
+    box-shadow: -1rem 0 3rem #272A31;
+    position: relative;
+    right: 0px;
+    height: 190px;
+    width: auto;
+    border-radius: 10px;
+} 
 
 #playerHand img {
     
@@ -204,6 +218,15 @@ body {
         transform: rotate(-180deg); 
     }
 }
+
+@keyframes flippedCard {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
 /* draw the eye to notifications */
 @keyframes color-changer {
     from {
@@ -214,12 +237,6 @@ body {
         color: #A76B09
     }
 }
-
-
-
-
-
-
 
 
 
