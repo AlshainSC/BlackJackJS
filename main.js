@@ -57,6 +57,7 @@
         $("#newGame").removeClass("button").addClass("disabled");
         game.html("New Game!  Deal two cards to start!");
         $(".roundsWon h3").replaceWith(game);
+        roundOver();
 
         
         //start game
