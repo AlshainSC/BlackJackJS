@@ -32,6 +32,7 @@
     let dealerBustMessage = "Dealer is bust!";
     let dealerWinMessage = "Dealer wins!";
     let dHasAce = false;
+    
 
 
 
@@ -102,7 +103,6 @@
             turn.html("Your Turn!");
             $(".roundsWon h3").replaceWith(turn);
         };
-    game();
     });
 
     $("#hit").on('click', function() {
@@ -117,8 +117,6 @@
         turn.html("Dealer's Turn!");
         $(".roundsWon h3").replaceWith(turn);
         stand();
-        
-    
     });
 
     $("#playAgain").on('click', function() {
@@ -135,25 +133,20 @@
 
 //game function
     function game() {
+        
         updateScores();
-        console.log(pHasAce)
         if (target === false && dealerStand === false) {
             $("#hit").removeClass("button").addClass("disabled");
             $("#stay").removeClass("button").addClass("disabled");
             //$(".roundsWon h2").replaceWith("<h2>Dealer's turn!</h2>");
             dealer();          
         };
-        if (dealerStand === true) {
-            updateScores();
-            winConditions();
-        };
 
-        if (pHasAce === true) {
+        if (pHasAce || dHasAce) {
             checkAces();
         }
-        if (dHasAce === true) {
-            checkAces();
-        }
+
+        
        /* if (dHandVal > 21) {
             winConditions();
         };
@@ -228,7 +221,7 @@
                 playerHand[i].value = 1;
                 pHasAce = false;
             }
-            updateScores();
+            
         }
         for (let i = 0; i < dealerHand.length; i++) {
             if (dealerHand[i].value === 11 && dHandVal > 21) {
@@ -236,7 +229,7 @@
                 dealerHand[i].value = 1;
                 dHasAce = false;
             }
-            updateScores();
+            
         }
     }
 
@@ -246,9 +239,20 @@
         //Was having a difficult time getting scores to update on button press, without adding multiplicatively.
         //Initial attempts at logic remain commented out below.
         //Just as documentation of my uh....  process. 
+        $(pVal).text("Current Hand Value: " + pHandVal);
         
+        
+        if (dealerHand.length === 2 && target === true) {
+            dHandVal -= dealerHand[0].value;
+            $(dVal).text("Current Hand Value: " + dHandVal);
+        } else {
+            $(dVal).text("Current Hand Value: " + dHandVal);
+        }
+        
+        
+
         //attempt 3
-        pHandVal = 0;
+       /* pHandVal = 0;
         dHandVal = 0;
 
         for (let i = 0; i < playerHand.length; i++) {
@@ -258,7 +262,7 @@
         for (let i = 0; i < dealerHand.length; i++) {
             dHandVal += dealerHand[i].value;
             $(dVal).text("Current Hand Value: " + dHandVal);
-        }
+        } */
         
         //attempt #2
         /*for (let i = 0; i < playerHand.length; i++) {
@@ -399,10 +403,7 @@
             deck[i] = deck[random]; //replace current card with random card
             deck[random] = current; //replace random card with current card
         };
-        shuffled = true;
-        
-        game();
-        
+        shuffled = true;      
     };
 
     //deal cards
@@ -413,10 +414,11 @@
             if (pCard.value === 11) {
                 pHasAce = true;
             }
-            updateScores();
+            pHandVal += pCard.value; //add card value to player hand value 
     };
 
-    function dealerDeal() {   
+    function dealerDeal() {
+               
             let dCard = deck.pop();
             dealerHand.push(dCard);   
             cardImg(dCard).prependTo("#dealerCards");
@@ -426,30 +428,34 @@
             if (dHasAce) {
                 checkAces();
             }
-            updateScores();
+            dHandVal += dCard.value;
     }
 
     function dealTimer(i) {
-            if (i % 2 === 0) { //alternate player and dealer dealing
-                setTimeout(function() {
-                    playerDeal();
-                    
-                }, i * 500);
-                
-            } else {
-                setTimeout(function() {
-                    dealerDeal();
-                    
-                }, i * 500);
-                
-        };
-    }
+        if (i % 2 === 0) { //alternate player and dealer dealing
+            setTimeout(function() {
+                playerDeal();
+            }, i * 100); 
+        } else {    
+            setTimeout(function() {
+                dealerDeal();
+            }, i * 100);    
+        }
+    };
     
     function cardImg(card) {
-        
-        let cardImg = $("<img>");
+
+       let cardImg = $("<img>").attr("src", `assets/${card.suit}-${card.face}.svg`);
+       if (dealerHand.length === 1) {
+        cardImg.addClass("hidden");
+        $(".hidden").attr("src", "assets/cardBack.jpeg");
+       }
+
+       return cardImg;
+
+       /* let cardImg = $("<img>");
         cardImg.attr("src", `assets/${card.suit}-${card.face}.svg`); //assign image source based on suit and face (face being number or face card)
-        return cardImg;
+        return cardImg; */
     }
 
     //hit
@@ -468,12 +474,12 @@
         playerStand = true;
         target = false; //set target to dealer
         
-        game();
+        dealer();
     }
 
 //dealer logic
     function dealer() {
-        
+        updateScores();
         let turn = $("<h3>");
 
         if (dHandVal < 17 && pHandVal <= 21) {
@@ -488,7 +494,7 @@
         } else if (dHandVal > 21) {
             setTimeout(function() {
                 dealerStand = true;
-                game();
+                winConditions();
             }, 1500);
         } else if (dHandVal <= 21) {
             console.log('enter dealer stand else if')
@@ -497,10 +503,10 @@
                 dealerStand = true;
                 turn.html("Dealer Stands!")
                 $(".roundsWon h3").replaceWith(turn);
-                game();
+                winConditions();
             }, 1500);
         }
-
+        
     };
 
 
