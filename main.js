@@ -238,7 +238,7 @@
 
     function flipCard() {
         $("#dealerCards img").last().removeClass("flipped").addClass("unflipped");
-        $("#dealerCards .unflipped ").attr("src", `assets/${dealerHand[0].suit}-${dealerHand[0].value}.svg`);
+        $("#dealerCards .unflipped ").attr("src", `assets/${dealerHand[0].suit}-${dealerHand[0].face}.svg`);
         updateScores();
     }
 
