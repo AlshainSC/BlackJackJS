@@ -529,7 +529,7 @@
 //dealer logic
     function dealer() {
         let turn = $("<h3>");
-        if (dHandVal < 17 && pHandVal <= 21) {
+        if (dHandVal <= 17 && pHandVal <= 21) {
             //unsure if timeout is the best way to do this
             //but it works
             setTimeout(function() {
