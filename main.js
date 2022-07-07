@@ -518,6 +518,7 @@
         game();
 
         if (pHandVal > 21) {
+            flipCard();
             stand();
         }
     }
