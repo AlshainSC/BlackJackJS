@@ -63,28 +63,16 @@
 
         alert("1: If you go over 21, you lose!\
         \n\n2: If you and the dealer both go over 21, you both lose!\
-        \n\n3: Pressing the deal button will deal one card to each player.\
+        \n\n3: Pressing the deal button will deal two cards to each player.\
         \n\n4: Pressing the hit button will deal another card to the player.\
         \n\n5: Pressing the stay button will end the player's turn.\
         \n\n6: Once both the player and the dealer have finished their turns,\
-        the winner is determined.")
+        the winner is determined.\
+        \n\n7: The goal is to bring your hand's value as close to 21 as possible\
+        without going over.\
+        \n\nGood Luck and Have Fun!");
 
     });
-
-    /*$('#credits').on('click', function() {
-        let credits = $("<h4>");
-        credits.html("Nicholas Larson<br><br>\
-        With special thanks to:<br><br>\
-        The Larson Clan: the best guinea pigs<br><br>\
-        Peter: god-tier wizard coder extraordinaire<br><br>\
-        Klaus: absolute nonstop heckling<br><br>\
-        Nibby - not really a wanker<br><br>\
-        --see @readme for full source list--");
-        $("#credits").after(credits);
-        setTimeout(function() {
-            $(credits).remove();
-        }, 10000);
-    }); */
 
     $("#deal").on('click', function() {
         while (i < 4) {
