@@ -71,7 +71,7 @@
 
     });
 
-    $('#credits').on('click', function() {
+    /*$('#credits').on('click', function() {
         let credits = $("<h4>");
         credits.html("Nicholas Larson<br><br>\
         With special thanks to:<br><br>\
@@ -84,7 +84,7 @@
         setTimeout(function() {
             $(credits).remove();
         }, 10000);
-    });
+    }); */
 
     $("#deal").on('click', function() {
         while (i < 4) {
