@@ -380,6 +380,7 @@
 //assign face cards with appropriate names: Jack, Queen, King, Ace(?)
             switch (deck[card].value) {
                 case 1:
+                    deck[card].face = "ACE";
                     deck[card].value = 11;
                     break;
                 case 11:
