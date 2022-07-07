@@ -18,8 +18,8 @@
     let pVal = $('#pScore');
     let playerWins = 0;
     let playerStand = false;
-    let playerBustMessage = "Oh no you're bust!";
-    let playerWinMessage = "You win!";
+    let playerBustMessage = "Oh No You're Bust!";
+    let playerWinMessage = "You Win!";
     let pHasAce = false;
     
 
@@ -31,8 +31,8 @@
     let dVal = $('#dScore');
     let dealerWins = 0;
     let dealerStand = false;
-    let dealerBustMessage = "Dealer is bust!";
-    let dealerWinMessage = "Dealer wins!";
+    let dealerBustMessage = "Dealer is Bust!";
+    let dealerWinMessage = "Dealer Wins!";
     let dHasAce = false;
     
 
@@ -184,9 +184,10 @@
                 dealerWins++;
                 $("#playAgain").removeClass("disabled").addClass("button");
             }
+
         } else if (dHandVal > 21) { //dealer is bust
             if (pHandVal <= 21) { //dealer is bust and player is not bust
-                win.html(playerWinMessage);
+                win.html(dealerBustMessage);
                 $(".roundsWon h3").replaceWith(win);
                 playerWins++;
                 $("#playAgain").removeClass("disabled").addClass("button");
@@ -195,6 +196,7 @@
                 $(".roundsWon h3").replaceWith(win);
                 $("#playAgain").removeClass("disabled").addClass("button");
             }
+
         } else if (dHandVal < 21) { //dealer has score less than 21
             if (pHandVal === 21) { //player has blackjack, and dealer does not
                 win.html(playerWinMessage);
@@ -518,6 +520,9 @@
         game();
 
         if (pHandVal > 21) {
+            let lose = $("<h3>");
+            lose.html(playerBustMessage);
+            $(".roundsWon h3").replaceWith(lose);
             flipCard();
             stand();
         }
