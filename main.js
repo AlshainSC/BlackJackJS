@@ -126,6 +126,7 @@
         won.html("Player Wins: " + playerWins + "&nbsp &nbsp &nbsp" + suitsSymbols + "&nbsp &nbsp &nbsp" + " Dealer Wins: " + dealerWins)
         $(".roundsWon h2").replaceWith(won);
         $(".roundsWon h3").replaceWith("<h3>");
+        $("#newGame").removeClass("disabled").addClass("button");
         roundOver();
     });
 
@@ -211,7 +212,7 @@
             }
         }
 
-        $("#newGame").removeClass("disabled").addClass("button");
+        
     };
 
     function checkAces() {
