@@ -1,5 +1,12 @@
 {
   "dependencies": {
     "jquery": "^3.6.0"
-  }
+  },
+  "devDependencies": {
+    "electron": "^20.0.3"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "main": "main.js"
 }
